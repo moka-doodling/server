@@ -248,6 +248,13 @@
 
 	</dependencies>
 	<build>
+		<!--src/main/resources에 들어가는 application.properties에서 maven 환경변수인 project.basedir를 참조하기 위해 -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
