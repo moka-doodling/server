@@ -6,7 +6,8 @@ import com.doodling.member.domain.Member;
 
 public interface MemberMapper {
 	
-	public Optional<Member> findByUsername(String username);
-	public Long countTotal();
-	public void insert(Member member);
+	Optional<Member> findByUsername(String username);
+	Long countTotal();
+	void insert(Member member);
+	int deleteUserByMemberId(Integer memberId);
 }

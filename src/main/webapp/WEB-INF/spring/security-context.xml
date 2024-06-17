@@ -43,6 +43,11 @@
         <security:intercept-url pattern="/member/sign-up"
                                 access="permitAll" />
 
+        <!-- 로그아웃 설정 -->
+        <security:logout logout-url="/member/logout"
+                         logout-success-url="/login"
+                         delete-cookies="JSESSIONID"
+                         invalidate-session="true" />
 
         <!-- Access denied handler 설정 -->
         <security:access-denied-handler

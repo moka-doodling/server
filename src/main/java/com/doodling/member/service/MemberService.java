@@ -7,4 +7,5 @@ import com.doodling.member.dto.TokenDTO;
 public interface MemberService {
   void register(Member member);
   TokenDTO reissueToken(ReissueTokenDTO reissueTokenDto);
+  boolean deleteUser(Integer memberId);
 }
