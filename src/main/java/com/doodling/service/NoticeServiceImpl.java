@@ -1,6 +1,7 @@
 package com.doodling.service;
 
-import com.doodling.domain.NoticeVO;
+import com.doodling.domain.Notice;
+import com.doodling.dto.NoticeInsertRequest;
 import com.doodling.mapper.NoticeMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +16,10 @@ public class NoticeServiceImpl implements NoticeService {
 
     // 공지사항 등록
     @Override
-    public void insertNotice(NoticeVO notice) throws Exception {
+    public void insertNotice(NoticeInsertRequest request) throws Exception {
         try {
-            log.info("insert notice -> " + notice);
-            mapper.insertNotice(notice);
+            log.info("insert notice -> " + request);
+            mapper.insertNotice(request);
         } catch (Exception e) {
             log.warn(e.getMessage());
             throw e;

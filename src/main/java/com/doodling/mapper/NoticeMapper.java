@@ -1,9 +1,10 @@
 package com.doodling.mapper;
 
-import com.doodling.domain.NoticeVO;
+import com.doodling.domain.Notice;
+import com.doodling.dto.NoticeInsertRequest;
 
 public interface NoticeMapper {
 
-    public void insertNotice(NoticeVO notice);
+    public void insertNotice(NoticeInsertRequest request);
 
 }

@@ -1,9 +1,9 @@
 package com.doodling.service;
 
-import com.doodling.domain.NoticeVO;
+import com.doodling.dto.NoticeInsertRequest;
 
 public interface NoticeService {
 
-    public void insertNotice(NoticeVO notice) throws Exception;
+    public void insertNotice(NoticeInsertRequest request) throws Exception;
 
 }

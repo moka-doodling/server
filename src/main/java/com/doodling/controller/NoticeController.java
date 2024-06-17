@@ -1,6 +1,7 @@
 package com.doodling.controller;
 
-import com.doodling.domain.NoticeVO;
+import com.doodling.domain.Notice;
+import com.doodling.dto.NoticeInsertRequest;
 import com.doodling.service.NoticeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,8 @@ public class NoticeController {
     private NoticeService service;
 
     @PostMapping("/notice")
-    public ResponseEntity<String> insert(@RequestBody NoticeVO notice) throws Exception {
-        service.insertNotice(notice);
+    public ResponseEntity<String> insert(@RequestBody NoticeInsertRequest request) throws Exception {
+        service.insertNotice(request);
         return new ResponseEntity<>("success to insert notify", HttpStatus.OK);
     }
 
