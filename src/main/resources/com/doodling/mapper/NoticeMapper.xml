@@ -9,4 +9,12 @@
             values (seq_notice.nextval, #{title}, #{content})
         ]]>
 	</insert>
+
+    <update id="deleteNotice" parameterType="long">
+        <![CDATA[
+            update notice
+            set deletedate = sysdate
+            where notice_id = ${notice_id}
+        ]]>
+	</update>
 </mapper>

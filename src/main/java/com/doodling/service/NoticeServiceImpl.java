@@ -1,6 +1,5 @@
 package com.doodling.service;
 
-import com.doodling.domain.Notice;
 import com.doodling.dto.NoticeInsertRequest;
 import com.doodling.mapper.NoticeMapper;
 import lombok.AllArgsConstructor;
@@ -20,6 +19,17 @@ public class NoticeServiceImpl implements NoticeService {
         try {
             log.info("insert notice -> " + request);
             mapper.insertNotice(request);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public void deleteNotice(Long notice_id) throws Exception {
+        try {
+            log.info("delete notice -> " + notice_id);
+            mapper.deleteNotice(notice_id);
         } catch (Exception e) {
             log.warn(e.getMessage());
             throw e;
