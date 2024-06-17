@@ -39,11 +39,12 @@ public class MemberServiceImpl implements MemberService {
                     .build());
   }
 
+  // refresh token 기반으로 access token 새롭게 생성
   @Override
   public TokenDTO reissueToken(ReissueTokenDTO reissueTokenDto) {
     boolean isValidRefreshToken = jwtTokenProvider.validRefreshToken(reissueTokenDto.getRefreshToken());
 
-    if (isValidRefreshToken) {
+    if (!isValidRefreshToken) {
       /* TODO: 에러 처리 필요 */
       log.error("유효하지 않은 refresh token 입니다.");
       return null;
@@ -56,6 +57,6 @@ public class MemberServiceImpl implements MemberService {
       return null;
     }
 
-    return TokenDTO.builder().accessToken(jwtTokenProvider.generateAccessToken(optional_member.get())).refreshToken(jwtTokenProvider.generateRefreshToken(optional_member.get())).build();
+    return TokenDTO.builder().accessToken(jwtTokenProvider.generateAccessToken(optional_member.get())).refreshToken(reissueTokenDto.getRefreshToken()).build();
   }
 }
