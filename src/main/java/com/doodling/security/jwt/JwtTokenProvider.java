@@ -3,12 +3,9 @@ package com.doodling.security.jwt;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.jsonwebtoken.*;
-import oracle.sql.REF;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,8 +14,8 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.security.SecurityException;
 
-import com.doodling.domain.Member;
-import com.doodling.dto.TokenDTO;
+import com.doodling.member.domain.Member;
+import com.doodling.member.dto.TokenDTO;
 import com.doodling.security.PrincipalDetails;
 
 import io.jsonwebtoken.security.Keys;

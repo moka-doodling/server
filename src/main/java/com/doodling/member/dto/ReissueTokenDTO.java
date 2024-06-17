@@ -1,4 +1,4 @@
-package com.doodling.dto;
+package com.doodling.member.dto;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package com.doodling.domain;
+package com.doodling.member.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.doodling.controller;
+package com.doodling.member.controller;
 
 import java.text.DateFormat;
 import java.util.Date;

@@ -9,8 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.doodling.domain.Member;
-import com.doodling.mapper.MemberMapper;
+import com.doodling.member.domain.Member;
+import com.doodling.member.mapper.MemberMapper;
 
 import lombok.extern.slf4j.Slf4j;
 

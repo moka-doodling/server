@@ -7,7 +7,7 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.doodling.domain.Member;
+import com.doodling.member.domain.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

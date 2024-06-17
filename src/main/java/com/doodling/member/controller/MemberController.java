@@ -1,9 +1,8 @@
-package com.doodling.controller;
+package com.doodling.member.controller;
 
-import com.doodling.dto.ReissueTokenDTO;
-import com.doodling.dto.TokenDTO;
-import com.doodling.service.AuthService;
-import org.apache.ibatis.ognl.Token;
+import com.doodling.member.dto.ReissueTokenDTO;
+import com.doodling.member.dto.TokenDTO;
+import com.doodling.member.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doodling.domain.Member;
-import com.doodling.dto.LoginRequestDTO;
-import com.doodling.service.MemberService;
+import com.doodling.member.domain.Member;
+import com.doodling.member.dto.LoginRequestDTO;
+import com.doodling.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

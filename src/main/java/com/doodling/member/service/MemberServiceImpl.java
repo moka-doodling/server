@@ -1,9 +1,9 @@
-package com.doodling.service;
+package com.doodling.member.service;
 
-import com.doodling.domain.Member;
-import com.doodling.dto.ReissueTokenDTO;
-import com.doodling.dto.TokenDTO;
-import com.doodling.mapper.MemberMapper;
+import com.doodling.member.domain.Member;
+import com.doodling.member.dto.ReissueTokenDTO;
+import com.doodling.member.dto.TokenDTO;
+import com.doodling.member.mapper.MemberMapper;
 import com.doodling.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

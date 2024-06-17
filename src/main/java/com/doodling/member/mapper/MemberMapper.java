@@ -1,10 +1,8 @@
-package com.doodling.mapper;
+package com.doodling.member.mapper;
 
 import java.util.Optional;
 
-import org.springframework.stereotype.Repository;
-
-import com.doodling.domain.Member;
+import com.doodling.member.domain.Member;
 
 public interface MemberMapper {
 	

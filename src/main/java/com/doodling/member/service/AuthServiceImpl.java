@@ -1,12 +1,12 @@
-package com.doodling.service;
+package com.doodling.member.service;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import com.doodling.dto.LoginRequestDTO;
-import com.doodling.dto.TokenDTO;
+import com.doodling.member.dto.LoginRequestDTO;
+import com.doodling.member.dto.TokenDTO;
 import com.doodling.security.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
