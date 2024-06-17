@@ -1,6 +1,6 @@
-package com.doodling.mapper;
+package com.doodling.admin.mapper;
 
-import com.doodling.dto.NoticeInsertRequest;
+import com.doodling.admin.dto.NoticeInsertRequest;
 
 public interface NoticeMapper {
 

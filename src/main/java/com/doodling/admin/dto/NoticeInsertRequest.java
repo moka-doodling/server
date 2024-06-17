@@ -1,4 +1,4 @@
-package com.doodling.dto;
+package com.doodling.admin.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
-package com.doodling.service;
+package com.doodling.admin.service;
 
-import com.doodling.dto.NoticeInsertRequest;
+import com.doodling.admin.dto.NoticeInsertRequest;
 
 public interface NoticeService {
 

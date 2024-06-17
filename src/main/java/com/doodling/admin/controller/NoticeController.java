@@ -1,7 +1,7 @@
-package com.doodling.controller;
+package com.doodling.admin.controller;
 
-import com.doodling.dto.NoticeInsertRequest;
-import com.doodling.service.NoticeService;
+import com.doodling.admin.dto.NoticeInsertRequest;
+import com.doodling.admin.service.NoticeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

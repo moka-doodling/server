@@ -1,7 +1,7 @@
-package com.doodling.service;
+package com.doodling.admin.service;
 
-import com.doodling.dto.NoticeInsertRequest;
-import com.doodling.mapper.NoticeMapper;
+import com.doodling.admin.dto.NoticeInsertRequest;
+import com.doodling.admin.mapper.NoticeMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
