@@ -6,13 +6,13 @@
 
     <insert id="insertRecommend" parameterType="Recommend">
         INSERT INTO recommend (recommend_id, member_id, submission_id)
-        VALUES (seq_recommend.nextval, #{memberId, jdbcType=NUMERIC}, #{submissionId, jdbcType=NUMERIC})
+        VALUES (seq_recommend.nextval, #{memberId}, #{submissionId})
     </insert>
 
     <select id="countRecommendByMemberId" parameterType="Recommend">
          SELECT count(*) from recommend
-         WHERE member_id=#{memberId, jdbcType=NUMERIC}
-           AND submission_id=#{submissionId, jdbcType=NUMERIC}
+         WHERE member_id=#{memberId}
+           AND submission_id=#{submissionId}
     </select>
 
 </mapper>
