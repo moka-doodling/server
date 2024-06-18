@@ -5,8 +5,8 @@
 <mapper namespace="com.doodling.admin.mapper.AdminRelayMapper">
     <insert id="insertRelay" parameterType="Relay">
         <![CDATA[
-            insert into notice (relay_id, startdate, enddate, title, age, cover)
-            values (seq_relay.nextval, #{startdate}, #{enddate}, #{title}, #{age}, #{cover})
+            insert into relay (relay_id, startdate, enddate, title, age, cover)
+            values (seq_relay.nextval, #{startdate}, #{enddate}, #{title}, #{age}, UTL_RAW.CAST_TO_RAW(#{cover}))
         ]]>
 	</insert>
 </mapper>

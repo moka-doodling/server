@@ -16,5 +16,4 @@ public class Relay {
     private Integer age;
     private String cover;
     private Boolean isEnd;
-
 }
