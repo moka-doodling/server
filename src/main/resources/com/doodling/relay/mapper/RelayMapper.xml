@@ -17,6 +17,18 @@
         ]]>
     </select>
 
+    <select id="selectAllOngoingRelays" resultType="Relay" parameterType="Integer">
+        <![CDATA[
+        SELECT r.relay_id relayId,
+               r.title title,
+               TO_CHAR(r.cover) cover,
+               r.age age
+        FROM relay r
+        WHERE r.is_end = #{filter}
+        ORDER BY r.relay_id
+        ]]>
+    </select>
+
 
 
 

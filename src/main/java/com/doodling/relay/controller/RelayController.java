@@ -5,9 +5,7 @@ import com.doodling.relay.dto.RelayResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,11 @@ public class RelayController {
     public ResponseEntity<List<RelayResponseDTO>> getAllBookRelays() {
         List<RelayResponseDTO> relayResponseDTOs = relayService.getAllBookRelays();
         return ResponseEntity.ok(relayResponseDTOs);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<RelayResponseDTO>> getAllRelays(@RequestParam("filtering") String filtering) {
+        return ResponseEntity.ok(relayService.getAllRelays(filtering));
     }
 
 }
