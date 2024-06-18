@@ -1,6 +1,8 @@
 package com.doodling.member.service;
 
 import com.doodling.member.domain.Member;
+import com.doodling.member.dto.ChangePasswordDTO;
+import com.doodling.member.dto.LoginRequestDTO;
 import com.doodling.member.dto.ReissueTokenDTO;
 import com.doodling.member.dto.TokenDTO;
 import com.doodling.member.mapper.MemberMapper;
@@ -19,23 +21,20 @@ import java.util.Optional;
 @Slf4j
 public class MemberServiceImpl implements MemberService {
 
-  @Autowired
-  private BCryptPasswordEncoder passwordEncoder;
+  private final BCryptPasswordEncoder passwordEncoder;
 
   private final MemberMapper memberMapper;
   private final JwtTokenProvider jwtTokenProvider;
 
   @Transactional
   @Override
-  public void register(Member member) {
-    log.info(member.toString());
+  public void register(LoginRequestDTO dto) {
 
     memberMapper
             .insert(Member.builder()
-                    .memberId(member.getMemberId())
-                    .password(passwordEncoder.encode(member.getPassword()))
-                    .username(member.getUsername())
-                    .roles(member.getRoles())
+                    .username(dto.getUsername())
+                    .password(passwordEncoder.encode(dto.getPassword()))
+                    .roles("ROLE_USER")
                     .build());
   }
 
@@ -68,4 +67,28 @@ public class MemberServiceImpl implements MemberService {
   }
 
 
+  @Transactional
+  public boolean changePassword(Integer memberId, ChangePasswordDTO changePasswordDTO) {
+    Optional<Member> optional_member = memberMapper.findByMemberId(memberId);
+
+    if (optional_member.isEmpty()) {
+      /* TODO: 에러 처리 필요 */
+      log.error("사용자를 찾지 못했습니다.");
+    }
+
+    Member member = optional_member.get();
+    /* matches 메서드 인자 순서 중요 (plain text, encoded text) */
+    if (!passwordEncoder.matches(changePasswordDTO.getOldPassword(), member.getPassword())) {
+      /* TODO: 에러 처리 필요 */
+      log.error("비밀번호가 일치하지 않습니다.");
+    }
+
+    if (!changePasswordDTO.getNewPassword().equals(changePasswordDTO.getPassword_validation())) {
+      /* TODO: 에러 처리 필요 */
+      log.error("비밀번호 확인에 실패했습니다.");
+    }
+    member.changePassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+
+    return 0 < memberMapper.changePassword(member);
+  }
 }

@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,9 +17,6 @@ import lombok.ToString;
 @ToString
 public class Member {
 
-	@Autowired
-	private BCryptPasswordEncoder encoder;
-
 	private Integer memberId;
 	private String username;
 	private String password;
@@ -33,5 +27,9 @@ public class Member {
 			return Arrays.asList(this.roles.split(","));
 		}
 		return new ArrayList();
+	}
+
+	public void changePassword(String password) {
+		this.password = password;
 	}
 }

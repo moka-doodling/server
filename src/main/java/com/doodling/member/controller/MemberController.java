@@ -1,18 +1,19 @@
 package com.doodling.member.controller;
 
+import com.doodling.member.dto.ChangePasswordDTO;
 import com.doodling.member.dto.ReissueTokenDTO;
 import com.doodling.member.dto.TokenDTO;
 import com.doodling.member.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.doodling.member.domain.Member;
 import com.doodling.member.dto.LoginRequestDTO;
 import com.doodling.member.service.MemberService;
 
@@ -39,9 +40,8 @@ public class MemberController {
 
 	@PostMapping("/sign-up")
 	public ResponseEntity<String> signup(@RequestBody LoginRequestDTO dto) {
-		memberService.register(
-				Member.builder().username(dto.getUsername()).password(dto.getPassword()).roles("ROLE_USER").build());
-		
+		memberService.register(dto);
+
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
@@ -62,5 +62,10 @@ public class MemberController {
 	@DeleteMapping("/{memberId}")
 	public ResponseEntity<Boolean> withdraw(@PathVariable Integer memberId) {
 		return ResponseEntity.ok(memberService.deleteUser(memberId));
+	}
+
+	@PatchMapping("/password/{memberId}")
+	public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO, @PathVariable Integer memberId) {
+		return ResponseEntity.ok(memberService.changePassword(memberId, changePasswordDTO));
 	}
 }
