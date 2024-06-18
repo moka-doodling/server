@@ -56,6 +56,6 @@
 	</context:component-scan>
 
 	<mybatis-spring:scan
-			base-package="com.doodling.member.mapper, com.doodling.submission.mapper, com.doodling.admin.mapper, com.doodling.recommend.mapper" />
+			base-package="com.doodling.member.mapper, com.doodling.submission.mapper, com.doodling.admin.mapper, com.doodling.recommend.mapper, com.doodling.relay.mapper" />
   
 </beans>
