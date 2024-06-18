@@ -1,16 +1,12 @@
 package com.doodling.member.controller;
 
+import com.doodling.member.dto.MyInfoResponseDTO;
 import com.doodling.member.dto.ReissueTokenDTO;
 import com.doodling.member.dto.TokenDTO;
 import com.doodling.member.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.doodling.member.domain.Member;
 import com.doodling.member.dto.LoginRequestDTO;
@@ -62,5 +58,10 @@ public class MemberController {
 	@DeleteMapping("/{memberId}")
 	public ResponseEntity<Boolean> withdraw(@PathVariable Integer memberId) {
 		return ResponseEntity.ok(memberService.deleteUser(memberId));
+	}
+
+	@GetMapping("/myinfo/{memberId}")
+	public ResponseEntity<MyInfoResponseDTO> myInfo(@PathVariable Integer memberId) {
+		return ResponseEntity.ok(memberService.getMyInfo(memberId));
 	}
 }

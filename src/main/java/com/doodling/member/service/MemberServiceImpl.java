@@ -1,6 +1,7 @@
 package com.doodling.member.service;
 
 import com.doodling.member.domain.Member;
+import com.doodling.member.dto.MyInfoResponseDTO;
 import com.doodling.member.dto.ReissueTokenDTO;
 import com.doodling.member.dto.TokenDTO;
 import com.doodling.member.mapper.MemberMapper;
@@ -65,6 +66,23 @@ public class MemberServiceImpl implements MemberService {
     int result = memberMapper.deleteUserByMemberId(memberId);
     log.info("삭제된 행: " + result);
     return 0 < result;
+  }
+
+  @Override
+  public MyInfoResponseDTO getMyInfo(Integer memberId) {
+    Optional<Member> optional_member = memberMapper.findByMemberId(memberId);
+    if (optional_member.isEmpty()) {
+      /* TODO: 에러 처리 필요 */
+      log.error("member 정보를 찾을 수 없습니다.");
+      return null;
+    }
+
+    Member member = optional_member.get();
+    return MyInfoResponseDTO.builder()
+            .memberId(memberId)
+            .username(member.getUsername())
+            .selected_cnt(member.getSelectedCnt())
+            .build();
   }
 
 

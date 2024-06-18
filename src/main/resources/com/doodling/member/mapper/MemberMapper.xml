@@ -7,12 +7,20 @@
     <select id="findByUsername" resultType="Member"
             parameterType="String">
         <![CDATA[
-        SELECT member_id memberId, username, password, roles
+        SELECT member_id memberId, username, password, selected_cnt selectedCnt, roles
         FROM member
         WHERE username = #{username} AND deletedate IS NULL
         ]]>
 	</select>
 
+    <select id="findByMemberId" resultType="Member"
+            parameterType="Integer">
+        <![CDATA[
+        SELECT member_id memberId, username, password, selected_cnt selectedCnt, roles
+        FROM member
+        WHERE member_id = #{memberId} AND deletedate IS NULL
+        ]]>
+	</select>
 
     <select id="countTotal" resultType="Long">
         <![CDATA[
