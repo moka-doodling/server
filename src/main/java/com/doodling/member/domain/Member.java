@@ -23,7 +23,7 @@ public class Member {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
-	private Long memberId;
+	private Integer memberId;
 	private String username;
 	private String password;
 	private String roles;

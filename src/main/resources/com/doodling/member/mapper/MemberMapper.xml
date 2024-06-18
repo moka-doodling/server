@@ -9,7 +9,7 @@
         <![CDATA[
         SELECT member_id memberId, username, password, roles
         FROM member
-        WHERE username = #{username}
+        WHERE username = #{username} AND deletedate IS NULL
         ]]>
 	</select>
 
@@ -27,4 +27,12 @@
         VALUES (seq_member.nextval, #{username}, #{password}, #{roles})
         ]]>
 	</insert>
+
+    <update id="deleteUserByMemberId" parameterType="Integer">
+        <![CDATA[
+        UPDATE member
+        SET deletedate = SYSDATE
+        WHERE member_id = #{memberId}
+        ]]>
+    </update>
 </mapper>

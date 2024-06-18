@@ -6,9 +6,11 @@ import com.doodling.member.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.doodling.member.domain.Member;
 import com.doodling.member.dto.LoginRequestDTO;
@@ -49,11 +51,16 @@ public class MemberController {
 		response.setHeader(AUTHORIZATION_HEADER, PREFIX + tokenDTO.getAccessToken());
 		response.setHeader(REFRESH_HEADER, PREFIX + tokenDTO.getAccessToken());
 
-		return ResponseEntity.status(HttpStatus.OK).body(true);
+		return ResponseEntity.ok(true);
 	}
 
 	@PostMapping("/refresh")
 	public ResponseEntity<TokenDTO> reissueToken(@RequestBody ReissueTokenDTO reissueTokenDto) {
-		return  ResponseEntity.ok(memberService.reissueToken(reissueTokenDto));
+		return ResponseEntity.ok(memberService.reissueToken(reissueTokenDto));
+	}
+
+	@DeleteMapping("/{memberId}")
+	public ResponseEntity<Boolean> withdraw(@PathVariable Integer memberId) {
+		return ResponseEntity.ok(memberService.deleteUser(memberId));
 	}
 }

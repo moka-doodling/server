@@ -59,4 +59,13 @@ public class MemberServiceImpl implements MemberService {
 
     return TokenDTO.builder().accessToken(jwtTokenProvider.generateAccessToken(optional_member.get())).refreshToken(reissueTokenDto.getRefreshToken()).build();
   }
+
+  @Override
+  public boolean deleteUser(Integer memberId) {
+    int result = memberMapper.deleteUserByMemberId(memberId);
+    log.info("삭제된 행: " + result);
+    return 0 < result;
+  }
+
+
 }
