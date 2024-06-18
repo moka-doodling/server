@@ -36,6 +36,9 @@
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
+		<!-- 리턴 타입을 VO로 잡을 때 앞 패키지 계층을 넣지 않으려면 -->
+		<property name="typeAliasesPackage"
+				  value="com.doodling.member.domain"></property>
 	</bean>
 
 	<!-- transaction manager -->
@@ -51,7 +54,6 @@
 	</context:component-scan>
 
 	<mybatis-spring:scan
-			base-package="com.doodling.mapper" />
-	<mybatis-spring:scan
-			base-package="com.doodling.submission.mapper" />
+			base-package="com.doodling.mapper, com.doodling.submission.mapper" />
+  
 </beans>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- JWT Token Provider -->
+    <bean id="jwtTokenProvider"
+          class="com.doodling.security.jwt.JwtTokenProvider" />
+
+    <!-- JWT Authentication Entry Point -->
+    <bean id="jwtAuthenticationEntryPoint"
+          class="com.doodling.security.jwt.JwtAuthenticationEntryPoint" />
+
+    <!-- JWT Access Denied Handler -->
+    <bean id="jwtAccessDeniedHandler"
+          class="com.doodling.security.jwt.JwtAccessDeniedHandler" />
+
+    <!-- BCrypt Password Encoder -->
+    <bean id="passwordEncoder"
+          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+    <!-- JWT Authentication Filter -->
+    <bean id="jwtAuthenticationFilter"
+          class="com.doodling.security.jwt.JwtAuthenticationFilter">
+        <constructor-arg ref="jwtTokenProvider" />
+    </bean>
+
+    <bean id="principalDetailsService"
+          class="com.doodling.security.PrincipalDetailsService" />
+
+    <security:http auto-config="true" use-expressions="true">
+        <security:csrf disabled="true" />
+
+        <security:custom-filter
+                ref="jwtAuthenticationFilter" position="PRE_AUTH_FILTER" />
+
+        <!-- 인증이 필요 없는 URL 설정 -->
+        <security:intercept-url pattern="/member/login"
+                                access="permitAll" />
+
+        <security:intercept-url pattern="/member/sign-up"
+                                access="permitAll" />
+
+        <!-- 로그아웃 설정 -->
+        <security:logout logout-url="/member/logout"
+                         logout-success-url="/login"
+                         delete-cookies="JSESSIONID"
+                         invalidate-session="true" />
+
+        <!-- Access denied handler 설정 -->
+        <security:access-denied-handler
+                ref="jwtAccessDeniedHandler" />
+    </security:http>
+
+    <!-- AuthenticationManager 설정 -->
+    <security:authentication-manager
+            id="authenticationManager">
+        <!-- 사용자 정보를 제공하는 서비스 등록 -->
+        <security:authentication-provider
+                user-service-ref="principalDetailsService">
+            <security:password-encoder
+                    ref="passwordEncoder" />
+
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+</beans>
