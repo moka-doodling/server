@@ -1,5 +1,6 @@
 package com.doodling.relay.controller;
 
+import com.doodling.relay.dto.RelayDetailResponseDTO;
 import com.doodling.relay.service.RelayService;
 import com.doodling.relay.dto.RelayResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,12 @@ public class RelayController {
     @GetMapping("/all")
     public ResponseEntity<List<RelayResponseDTO>> getAllRelays(@RequestParam("filtering") String filtering) {
         return ResponseEntity.ok(relayService.getAllRelays(filtering));
+    }
+  
+    @GetMapping("/book/{relayId}")
+    public ResponseEntity<RelayDetailResponseDTO> getBookRelayDetail(@PathVariable("relayId") Integer relayId) {
+        RelayDetailResponseDTO relayDetailResponseDTO = relayService.getBookRelayDetail(relayId);
+        return ResponseEntity.ok(relayDetailResponseDTO);
     }
 
 }

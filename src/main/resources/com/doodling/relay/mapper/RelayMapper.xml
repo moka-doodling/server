@@ -29,7 +29,22 @@
         ]]>
     </select>
 
-
-
+    <select id="selectBookDetailsByRelayId" resultType="Book" parameterType="Integer">
+        <![CDATA[
+        SELECT r.relay_id relayId,
+               s.submission_id submissionId,
+               s.week week,
+               m.username,
+               s.content,
+               TO_CHAR(s.sketch) sketch
+        FROM relay r
+                 JOIN submission s ON r.relay_id = s.relay_id
+                 JOIN member m ON s.member_id = m.member_id
+        WHERE r.relay_id = #{relayId}
+          AND r.is_end = 1
+          AND s.is_selected = 1
+        ORDER BY s.submission_id
+        ]]>
+    </select>
 
 </mapper>
