@@ -1,5 +1,6 @@
 package com.doodling.member.service;
 
+import com.doodling.exception.CustomException;
 import com.doodling.member.domain.Member;
 import com.doodling.member.dto.MyInfoResponseDTO;
 
@@ -22,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.doodling.exception.ErrorCode.INVALID_MEMBER_ID;
 
 @RequiredArgsConstructor
 @Service
@@ -78,11 +81,7 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public MyInfoResponseDTO getMyInfo(Integer memberId) {
     Optional<Member> optional_member = memberMapper.findByMemberId(memberId);
-    if (optional_member.isEmpty()) {
-      /* TODO: 에러 처리 필요 */
-      log.error("member 정보를 찾을 수 없습니다.");
-      return null;
-    }
+    optional_member.orElseThrow(() -> new CustomException(INVALID_MEMBER_ID));
 
     Member member = optional_member.get();
     return MyInfoResponseDTO.builder()
