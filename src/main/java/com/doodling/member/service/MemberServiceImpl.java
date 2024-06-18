@@ -12,6 +12,7 @@ import com.doodling.member.dto.ReissueTokenDTO;
 import com.doodling.member.dto.TokenDTO;
 import com.doodling.member.mapper.MemberMapper;
 import com.doodling.security.jwt.JwtTokenProvider;
+import com.doodling.submission.domain.Submission;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -93,20 +94,15 @@ public class MemberServiceImpl implements MemberService {
   @Override
   @Transactional
   public List<MySubmissionResponseDTO> getAllMySubmissions(Integer memberId, String filtering) {
-    return filtering.equals("ongoing") ?
-            memberMapper.findSubmissionsByMemberIdOngoing(memberId).stream()
-                    .map(s -> MySubmissionResponseDTO.builder().submissionId(s.getSubmission_id())
-                            .relayId(s.getRelay_id())
-                            .recommendCnt(s.getRecommend_cnt())
-                            .build())
-                    .collect(Collectors.toList())
-            :
-            memberMapper.findSubmissionsByMemberIdEnded(memberId).stream()
-                    .map(s -> MySubmissionResponseDTO.builder().submissionId(s.getSubmission_id())
-                            .relayId(s.getRelay_id())
-                            .recommendCnt(s.getRecommend_cnt())
-                            .build())
-                    .collect(Collectors.toList());
+    List<Submission> result = filtering.equals("ongoing") ? memberMapper.findSubmissionsByMemberIdOngoing(memberId) : memberMapper.findSubmissionsByMemberIdEnded(memberId);
+    log.info("MemberService Result: " + result);
+    return result.stream().map(s -> MySubmissionResponseDTO.builder()
+            .recommendCnt(s.getRecommend_cnt())
+            .submissionId(s.getSubmission_id())
+            .isSelected(s.is_selected())
+            .relayId(s.getRelay_id())
+            .build())
+            .collect(Collectors.toList());
   }
 
   @Override
