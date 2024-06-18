@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface SubmissionMapper {
 
-    List<Submission> selectSubmissionByRecommendCount(@Param("relay_id") int relay_id, @Param("week") int week);
+    List<Submission> selectSubmissionByRecommendCount(@Param("relayId") Integer relayId, @Param("week") Integer week);
 
-    List<Submission> selectSubmissionByRegisterDate(@Param("relay_id") int relay_id, @Param("week") int week);
+    List<Submission> selectSubmissionByRegisterDate(@Param("relayId") Integer relayId, @Param("week") Integer week);
 
-    Integer insertSubmission(Submission requestDTO);
+    Integer insertSubmission(Submission submission);
 
     Integer deleteSubmission(Integer submissionId);
 
-    List<Submission> selectSubmissionsByRelayIdAndIsSelected(@Param("relay_id") int relayId, @Param("is_selected") int isSelected);
+    List<Submission> selectSubmissionsByRelayIdAndIsSelected(@Param("relayId") Integer relayId, @Param("isSelected") Boolean isSelected);
 }

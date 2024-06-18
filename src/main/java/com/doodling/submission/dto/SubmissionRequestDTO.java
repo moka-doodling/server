@@ -21,5 +21,4 @@ public class SubmissionRequestDTO {
     private Integer week;
     private String content;
     private String sketch;
-
 }

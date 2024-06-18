@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface SubmissionService {
 
-    List<SubmissionDTO> selectSubmissionByRecommendCount(int relay_id, int week);
+    List<SubmissionResponseDTO> selectSubmissionByRecommendCount(Integer relayId, Integer week);
 
-    List<SubmissionDTO> selectSubmissionByRegisterDate(int relay_id, int week);
+    List<SubmissionResponseDTO> selectSubmissionByRegisterDate(Integer relayId, Integer week);
 
     Integer registerSubmission(SubmissionRequestDTO requestDTO);
 
     Integer deleteSubmission(Integer submissionId);
 
-    List<SubmissionResponseDTO> selectSubmissionsByRelayIdAndIsSelected(int relayId, int isSelected);
+    List<SubmissionResponseDTO> selectSubmissionsByRelayIdAndIsSelected(Integer relayId, Boolean isSelected);
 }

@@ -98,10 +98,10 @@ public class MemberServiceImpl implements MemberService {
     List<Submission> result = filtering.equals("ongoing") ? memberMapper.findSubmissionsByMemberIdOngoing(memberId) : memberMapper.findSubmissionsByMemberIdEnded(memberId);
     log.info("MemberService Result: " + result);
     return result.stream().map(s -> MySubmissionResponseDTO.builder()
-            .recommendCnt(s.getRecommend_cnt())
-            .submissionId(s.getSubmission_id())
-            .isSelected(s.is_selected())
-            .relayId(s.getRelay_id())
+            .recommendCnt(s.getRecommendCnt())
+            .submissionId(s.getSubmissionId())
+            .isSelected(s.getIsSelected())
+            .relayId(s.getRelayId())
             .build())
             .collect(Collectors.toList());
   }

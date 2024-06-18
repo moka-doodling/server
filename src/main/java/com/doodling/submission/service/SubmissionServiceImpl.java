@@ -21,14 +21,13 @@ public class SubmissionServiceImpl implements SubmissionService {
     private final SubmissionMapper mapper;
 
     @Override
-    public List<SubmissionDTO> selectSubmissionByRecommendCount(int relay_id, int week) {
-        return mapper.selectSubmissionByRecommendCount(relay_id, week).stream()
-                .map(submission -> SubmissionDTO.builder()
-                        .submission_id(submission.getSubmission_id())
-                        .member_id(submission.getMember_id())
-                        .recommend_cnt(submission.getRecommend_cnt())
+    public List<SubmissionResponseDTO> selectSubmissionByRecommendCount(Integer relayId, Integer week) {
+        return mapper.selectSubmissionByRecommendCount(relayId, week).stream()
+                .map(submission -> SubmissionResponseDTO.builder()
+                        .submissionId(submission.getSubmissionId())
+                        .memberId(submission.getMemberId())
+                        .recommendCnt(submission.getRecommendCnt())
                         .regdate(submission.getRegdate())
-                        .deletedate(submission.getDeletedate())
                         .content(submission.getContent())
                         .sketch(submission.getSketch())
                         .build())
@@ -36,14 +35,13 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public List<SubmissionDTO> selectSubmissionByRegisterDate(int relay_id, int week) {
-        return mapper.selectSubmissionByRegisterDate(relay_id, week).stream()
-                .map(submission -> SubmissionDTO.builder()
-                        .submission_id(submission.getSubmission_id())
-                        .member_id(submission.getMember_id())
-                        .recommend_cnt(submission.getRecommend_cnt())
+    public List<SubmissionResponseDTO> selectSubmissionByRegisterDate(Integer relayId, Integer week) {
+        return mapper.selectSubmissionByRegisterDate(relayId, week).stream()
+                .map(submission -> SubmissionResponseDTO.builder()
+                        .submissionId(submission.getSubmissionId())
+                        .memberId(submission.getMemberId())
+                        .recommendCnt(submission.getRecommendCnt())
                         .regdate(submission.getRegdate())
-                        .deletedate(submission.getDeletedate())
                         .content(submission.getContent())
                         .sketch(submission.getSketch())
                         .build())
@@ -54,8 +52,8 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     public Integer registerSubmission(SubmissionRequestDTO requestDTO) {
         Submission submission = Submission.builder()
-                .relay_id(requestDTO.getRelayId())
-                .member_id(requestDTO.getMemberId())
+                .relayId(requestDTO.getRelayId())
+                .memberId(requestDTO.getMemberId())
                 .week(requestDTO.getWeek())
                 .content(requestDTO.getContent())
                 .sketch(requestDTO.getSketch())
@@ -63,9 +61,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         mapper.insertSubmission(submission);
 
-        return submission.getSubmission_id();
+        return submission.getSubmissionId();
     }
-
 
     @Transactional
     @Override
@@ -75,18 +72,18 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     @Transactional
     @Override
-    public List<SubmissionResponseDTO> selectSubmissionsByRelayIdAndIsSelected(int relay_id, int is_selected) {
-        return mapper.selectSubmissionsByRelayIdAndIsSelected(relay_id, is_selected).stream()
+    public List<SubmissionResponseDTO> selectSubmissionsByRelayIdAndIsSelected(Integer relayId, Boolean isSelected) {
+        return mapper.selectSubmissionsByRelayIdAndIsSelected(relayId, isSelected).stream()
                 .map(submission -> {
                     return SubmissionResponseDTO.builder()
-                            .submissionId(submission.getSubmission_id())
-                            .relayId(submission.getRelay_id())
-                            .memberId(submission.getMember_id())
+                            .submissionId(submission.getSubmissionId())
+                            .relayId(submission.getRelayId())
+                            .memberId(submission.getMemberId())
                             .week(submission.getWeek())
                             .content(submission.getContent())
                             .sketch(submission.getSketch())
                             .regdate(submission.getRegdate())
-                            .recommendCnt(submission.getRecommend_cnt())
+                            .recommendCnt(submission.getRecommendCnt())
                             .build();
                 })
                 .collect(Collectors.toList());
