@@ -21,4 +21,5 @@ public class Submission {
     private String content;
     private Boolean isSelected;
     private String sketch;
+
 }
