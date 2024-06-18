@@ -17,4 +17,5 @@ public interface SubmissionService {
     Integer deleteSubmission(Integer submissionId);
 
     List<SubmissionResponseDTO> selectSubmissionsByRelayIdAndIsSelected(Integer relayId, Boolean isSelected);
+
 }
