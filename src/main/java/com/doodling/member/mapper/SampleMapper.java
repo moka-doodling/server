@@ -1,4 +1,4 @@
-package com.doodling.mapper;
+package com.doodling.member.mapper;
 
 import java.util.Date;
 
