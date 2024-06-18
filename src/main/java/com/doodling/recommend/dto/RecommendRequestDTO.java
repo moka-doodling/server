@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RecommendRequestDTO {
 
-    private Integer recommendId;
     private Integer memberId;
     private Integer submissionId;
 
