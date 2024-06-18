@@ -1,24 +1,24 @@
 package com.doodling.submission.domain;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Blob;
 import java.util.Date;
 
-@Data
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Getter
 @Builder
 public class Submission {
 
-    private int submission_id;
-    private int relay_id;
-    private int member_id;
-    private int recommend_cnt;
+    private Integer submissionId;
+    private Integer relayId;
+    private Integer memberId;
+    private Integer recommendCnt;
     private Date regdate;
     private Date deletedate;
-    private int week;
+    private Integer week;
     private String content;
-    private int is_selected;
+    private Boolean isSelected;
     private String sketch;
-
 }

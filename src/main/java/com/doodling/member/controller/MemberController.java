@@ -75,6 +75,8 @@ public class MemberController {
 
 	@GetMapping("/{memberId}/mypages")
 	public ResponseEntity<List<MySubmissionResponseDTO>> myAllSubmissions(@PathVariable Integer memberId, @RequestParam("filtering") String filtering) {
+		log.info("filtering: " + filtering);
+		log.info("memberId: " + memberId);
 		return ResponseEntity.ok(memberService.getAllMySubmissions(memberId, filtering));
 	}
 }

@@ -36,23 +36,31 @@
         ]]>
 	</insert>
 
-    <select id="findSubmissionsByMemberIdOngoing" parameterType="Integer" resultType="Submission">
-        <![CDATA[
-        SELECT s.submission_id submission_id, s.relay_id relay_id, s.is_selected is_selected, (SELECT COUNT(*) FROM recommend l WHERE l.submission_id = s.submission_id) AS recommend_cnt
+    <select id="findSubmissionsByMemberIdOngoing" parameterType="Integer" resultType="com.doodling.submission.domain.Submission">
+    <![CDATA[
+        SELECT s.submission_id AS submissionId,
+               s.relay_id AS relayId,
+               s.is_selected AS isSelected,
+               (SELECT COUNT(*) FROM recommend l WHERE l.submission_id = s.submission_id) AS recommendCnt,
+               s.regdate AS regdate
         FROM submission s
                  JOIN relay r ON s.relay_id = r.relay_id
         WHERE r.is_end = 0
           AND s.member_id = #{memberId}
         ORDER BY s.regdate DESC
         ]]>
-    </select>
+</select>
 
     <select id="findSubmissionsByMemberIdEnded" parameterType="Integer" resultType="Submission">
         <![CDATA[
-        SELECT s.submission_id submission_id, s.relay_id relay_id, (SELECT COUNT(*) FROM recommend l WHERE l.submission_id = s.submission_id) AS recommend_cnt
+        SELECT s.submission_id AS submissionId,
+               s.relay_id AS relayId,
+               s.is_selected AS isSelected,
+               (SELECT COUNT(*) FROM recommend l WHERE l.submission_id = s.submission_id) AS recommendCnt,
+               s.regdate AS regdate
         FROM submission s
                  JOIN relay r ON s.relay_id = r.relay_id
-        WHERE r.is_end = 1 -- 종료된 relay에 대해서만
+        WHERE r.is_end = 1
           AND s.member_id = #{memberId}
         ORDER BY s.regdate DESC
         ]]>

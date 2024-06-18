@@ -5,10 +5,10 @@
 <mapper namespace="com.doodling.submission.mapper.SubmissionMapper">
     <select id="selectSubmissionByRecommendCount" resultType="Submission">
         <![CDATA[
-            select submission_id, member_id, recommend_cnt, regdate, deletedate, content, sketch
+            select submission_id submissionId, member_id memberId, recommend_cnt recommendCnt, regdate, deletedate, content, TO_CHAR(sketch) sketch
             from submission
             where deletedate is null
-              and relay_id=#{relay_id}
+              and relay_id=#{relayId}
               and week=#{week}
             order by recommend_cnt desc
         ]]>
@@ -16,25 +16,25 @@
 
     <select id="selectSubmissionByRegisterDate" resultType="Submission">
         <![CDATA[
-        select submission_id, member_id, recommend_cnt, regdate, deletedate, content, sketch
+        select submission_id submissionId, member_id memberId, recommend_cnt recommendCnt, regdate, deletedate, content, TO_CHAR(sketch) sketch
         from submission
         where deletedate is null
-          and relay_id=#{relay_id}
+          and relay_id=#{relayId}
           and week=#{week}
         order by regdate desc
         ]]>
 	</select>
 
     <insert id="insertSubmission" parameterType="Submission">
-        <selectKey keyProperty="submission_id" resultType="java.lang.Integer" order="BEFORE">
+        <selectKey keyProperty="submissionId" resultType="java.lang.Integer" order="BEFORE">
             <![CDATA[
-        SELECT seq_submission.nextval AS submission_id FROM dual
+        SELECT seq_submission.nextval AS submissionId FROM dual
         ]]>
         </selectKey>
         <![CDATA[
-    INSERT INTO submission (submission_id, relay_id, member_id, week, content, sketch)
-    VALUES (#{submission_id}, #{relay_id}, #{member_id}, #{week}, #{content}, UTL_RAW.CAST_TO_RAW(#{sketch}))
-    ]]>
+        INSERT INTO submission (submission_id, relay_id, member_id, week, content, sketch)
+        VALUES (#{submissionId}, #{relayId}, #{memberId}, #{week}, #{content}, UTL_RAW.CAST_TO_RAW(#{sketch}))
+        ]]>
     </insert>
 
     <update id="deleteSubmission" parameterType="java.lang.Integer">
@@ -47,7 +47,7 @@
 
     <select id="selectSubmissionsByRelayIdAndIsSelected" resultType="Submission">
         SELECT * FROM submission
-        WHERE relay_id = #{relay_id}
-          AND is_selected = #{is_selected}
+        WHERE relay_id = #{relayId}
+          AND is_selected = #{isSelected}
     </select>
 </mapper>

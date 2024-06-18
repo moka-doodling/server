@@ -22,34 +22,32 @@ public class SubmissionController {
     private final SubmissionService service;
 
     @GetMapping("/list")
-    public ResponseEntity<List<SubmissionDTO>> getRecommendList(@RequestParam int relay_id, @RequestParam int week, @RequestParam String sort) {
-        List<SubmissionDTO> response;
+    public ResponseEntity<List<SubmissionResponseDTO>> getRecommendList(@RequestParam Integer relayId, @RequestParam Integer week, @RequestParam String sort) {
+        List<SubmissionResponseDTO> response;
         if (sort.equals("recommend")) {
-            response = service.selectSubmissionByRecommendCount(relay_id, week);
+            response = service.selectSubmissionByRecommendCount(relayId, week);
         } else {
-            response = service.selectSubmissionByRegisterDate(relay_id, week);
+            response = service.selectSubmissionByRegisterDate(relayId, week);
         }
 
         return ResponseEntity.ok(response);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping
     public ResponseEntity<Integer> registerSubmission(@RequestBody SubmissionRequestDTO requestDTO) {
         Integer submissionId = service.registerSubmission(requestDTO);
         return ResponseEntity.ok(submissionId);
     }
 
-    @DeleteMapping("/{submission_id}")
-    public ResponseEntity<Integer> deleteSubmission(@PathVariable("submission_id") Integer submissionId) {
+    @DeleteMapping("/{submissionId}")
+    public ResponseEntity<Integer> deleteSubmission(@PathVariable("submissionId") Integer submissionId) {
         Integer deletedSubmissionId = service.deleteSubmission(submissionId);
         return ResponseEntity.ok(deletedSubmissionId);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @GetMapping
-    public ResponseEntity<List<SubmissionResponseDTO>> getSelectedSubmissions(@RequestParam int relay_id, @RequestParam int is_selected) {
-        List<SubmissionResponseDTO> response = service.selectSubmissionsByRelayIdAndIsSelected(relay_id, is_selected);
+    public ResponseEntity<List<SubmissionResponseDTO>> getSelectedSubmissions(@RequestParam Integer relayId, @RequestParam Boolean isSelected) {
+        List<SubmissionResponseDTO> response = service.selectSubmissionsByRelayIdAndIsSelected(relayId, isSelected);
         return ResponseEntity.ok(response);
     }
 

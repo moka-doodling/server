@@ -3,7 +3,6 @@ package com.doodling.recommend.service;
 import com.doodling.recommend.domain.Recommend;
 import com.doodling.recommend.dto.RecommendRequestDTO;
 import com.doodling.recommend.mapper.RecommendMapper;
-import com.doodling.submission.mapper.SubmissionMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
