@@ -43,4 +43,11 @@
         WHERE member_id = #{memberId}
         ]]>
     </update>
+    <update id="changePassword" parameterType="Member">
+        <![CDATA[
+        UPDATE member
+        SET password = #{password}
+        WHERE member_id = #{memberId}
+        ]]>
+    </update>
 </mapper>

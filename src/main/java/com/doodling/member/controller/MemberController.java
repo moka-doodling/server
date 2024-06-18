@@ -1,6 +1,8 @@
 package com.doodling.member.controller;
 
 import com.doodling.member.dto.MyInfoResponseDTO;
+import com.doodling.member.dto.ChangePasswordDTO;
+
 import com.doodling.member.dto.ReissueTokenDTO;
 import com.doodling.member.dto.TokenDTO;
 import com.doodling.member.service.AuthService;
@@ -8,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.doodling.member.domain.Member;
 import com.doodling.member.dto.LoginRequestDTO;
 import com.doodling.member.service.MemberService;
 
@@ -35,9 +36,8 @@ public class MemberController {
 
 	@PostMapping("/sign-up")
 	public ResponseEntity<String> signup(@RequestBody LoginRequestDTO dto) {
-		memberService.register(
-				Member.builder().username(dto.getUsername()).password(dto.getPassword()).roles("ROLE_USER").build());
-		
+		memberService.register(dto);
+
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
@@ -63,5 +63,10 @@ public class MemberController {
 	@GetMapping("/myinfo/{memberId}")
 	public ResponseEntity<MyInfoResponseDTO> myInfo(@PathVariable Integer memberId) {
 		return ResponseEntity.ok(memberService.getMyInfo(memberId));
+
+	@PatchMapping("/password/{memberId}")
+	public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO, @PathVariable Integer memberId) {
+		return ResponseEntity.ok(memberService.changePassword(memberId, changePasswordDTO));
+
 	}
 }
