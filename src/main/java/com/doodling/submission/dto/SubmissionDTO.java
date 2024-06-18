@@ -18,5 +18,5 @@ public class SubmissionDTO {
     private Date regdate;
     private Date deletedate;
     private String content;
-    private Blob sketch;
+    private String sketch;
 }

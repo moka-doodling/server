@@ -7,13 +7,14 @@ import lombok.Setter;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.Blob;
+import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Builder
 @RequiredArgsConstructor
-public class SubmissionRequestDTO {
+public class SubmissionResponseDTO {
 
     private Integer submissionId;
     private Integer relayId;
@@ -21,5 +22,7 @@ public class SubmissionRequestDTO {
     private Integer week;
     private String content;
     private String sketch;
+    private Date regdate;
+    private Integer recommendCnt;
 
 }

@@ -25,15 +25,15 @@
         ]]>
 	</select>
 
-    <insert id="insertSubmission" parameterType="com.doodling.submission.dto.SubmissionRequestDTO">
-        <selectKey keyProperty="submissionId" resultType="java.lang.Integer" order="BEFORE">
+    <insert id="insertSubmission" parameterType="Submission">
+        <selectKey keyProperty="submission_id" resultType="java.lang.Integer" order="BEFORE">
             <![CDATA[
-        SELECT seq_submission.nextval AS submissionId FROM dual
+        SELECT seq_submission.nextval AS submission_id FROM dual
         ]]>
         </selectKey>
         <![CDATA[
     INSERT INTO submission (submission_id, relay_id, member_id, week, content, sketch)
-    VALUES (#{submissionId}, #{relayId}, #{memberId}, #{week}, #{content}, UTL_RAW.CAST_TO_RAW(#{sketch}))
+    VALUES (#{submission_id}, #{relay_id}, #{member_id}, #{week}, #{content}, UTL_RAW.CAST_TO_RAW(#{sketch}))
     ]]>
     </insert>
 
@@ -44,4 +44,10 @@
         WHERE submission_id = #{submissionId}
         ]]>
     </update>
+
+    <select id="selectSubmissionsByRelayIdAndIsSelected" resultType="Submission">
+        SELECT * FROM submission
+        WHERE relay_id = #{relay_id}
+          AND is_selected = #{is_selected}
+    </select>
 </mapper>
