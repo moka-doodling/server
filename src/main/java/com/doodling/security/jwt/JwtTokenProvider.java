@@ -124,21 +124,24 @@ public class JwtTokenProvider implements InitializingBean {
 
       return true;
     } catch (SecurityException | MalformedJwtException e) {
-      log.info("유효하지 않은 access 토큰입니다.");
+      log.error("유효하지 않은 access 토큰입니다.");
+      throw new JwtException("유효하지 않은 access 토큰입니다.");
     } catch (ExpiredJwtException e) {
-      log.info("만료된 access 토큰입니다.");
+      log.error("만료된 access 토큰입니다.");
+      throw new JwtException("만료된 access 토큰입니다.");
     } catch (UnsupportedJwtException e) {
-      log.info("지원되지 않는 access 토큰입니다.");
+      log.error("지원되지 않는 access 토큰입니다.");
+      throw new JwtException("지원되지 않는 access 토큰입니다.");
     } catch (IllegalArgumentException e) {
-      log.info("잘못된 access 토큰입니다.");
+      log.error("잘못된 access 토큰입니다.");
+      throw new JwtException("잘못된 access 토큰입니다.");
     }
-    return false;
   }
 
   public boolean validRefreshToken(String token) {
     if (token == null) {
       log.error("[JwtTokenProvider] Token값이 존재하지 않습니다.");
-      throw new JwtException("Token값이 존재하지 않습니다.");
+      throw new JwtException("유효하지 않은 refresh 토큰입니다.");
     }
 
     log.info("받은 Refresh 토큰:" + token);
@@ -147,10 +150,10 @@ public class JwtTokenProvider implements InitializingBean {
       Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
       return true;
 
-    } catch (ExpiredJwtException e) { // 만료된 refresh 토큰
+    } catch (ExpiredJwtException e) {
       log.error("만료된 refresh 토큰입니다.");
       throw new JwtException("만료된 refresh 토큰으로, 로그아웃이 필요합니다.");
-    } catch (JwtException e) {  // 그 외 발생한 에러
+    } catch (JwtException e) {
       log.error("refresh token 에러입니다.");
       throw new JwtException("refresh token 에러입니다.");
     }
