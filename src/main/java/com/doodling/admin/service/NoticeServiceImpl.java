@@ -2,6 +2,8 @@ package com.doodling.admin.service;
 
 import com.doodling.admin.dto.NoticeInsertRequestDTO;
 import com.doodling.admin.mapper.NoticeMapper;
+import com.doodling.exception.CustomException;
+import com.doodling.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,8 @@ public class NoticeServiceImpl implements NoticeService {
     public boolean deleteNotice(Integer noticeId) {
         log.info("delete notice -> " + noticeId);
         int result = mapper.deleteNotice(noticeId);
+
+        if (result == 0) throw new CustomException(ErrorCode.FAIL_TO_DELETE);
 
         return result == 1;
     }

@@ -9,4 +9,15 @@
             values (seq_relay.nextval, #{startdate}, #{enddate}, #{title}, #{age}, UTL_RAW.CAST_TO_RAW(#{cover}))
         ]]>
 	</insert>
+
+    <update id="deleteRelay" parameterType="java.lang.Integer">
+        <![CDATA[
+            update relay
+            set is_end = 1
+            where relay_id = #{relayId}
+              and current_date >= enddate
+              and TO_CHAR(current_date, 'HH24') >= '23'
+              and is_end = 0
+        ]]>
+	</update>
 </mapper>

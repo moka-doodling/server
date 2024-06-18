@@ -19,8 +19,8 @@ public enum ErrorCode {
 
   /* code: 500 */
   DATABASE_ERROR(INTERNAL_SERVER_ERROR, "데이터베이스 오류가 발생했습니다."),
+  FAIL_TO_DELETE(UNAUTHORIZED, "삭제에 실패했습니다."),
   ;
-
 
   private final HttpStatus httpStatus;
   private final String detail;
