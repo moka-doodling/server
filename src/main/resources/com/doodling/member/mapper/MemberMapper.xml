@@ -36,6 +36,28 @@
         ]]>
 	</insert>
 
+    <select id="findSubmissionsByMemberIdOngoing" parameterType="Integer" resultType="Submission">
+        <![CDATA[
+        SELECT s.submission_id submission_id, s.relay_id relay_id, s.is_selected is_selected, (SELECT COUNT(*) FROM recommend l WHERE l.submission_id = s.submission_id) AS recommend_cnt
+        FROM submission s
+                 JOIN relay r ON s.relay_id = r.relay_id
+        WHERE r.is_end = 0
+          AND s.member_id = #{memberId}
+        ORDER BY s.regdate DESC
+        ]]>
+    </select>
+
+    <select id="findSubmissionsByMemberIdEnded" parameterType="Integer" resultType="Submission">
+        <![CDATA[
+        SELECT s.submission_id submission_id, s.relay_id relay_id, (SELECT COUNT(*) FROM recommend l WHERE l.submission_id = s.submission_id) AS recommend_cnt
+        FROM submission s
+                 JOIN relay r ON s.relay_id = r.relay_id
+        WHERE r.is_end = 1 -- 종료된 relay에 대해서만
+          AND s.member_id = #{memberId}
+        ORDER BY s.regdate DESC
+        ]]>
+    </select>
+
     <update id="deleteUserByMemberId" parameterType="Integer">
         <![CDATA[
         UPDATE member

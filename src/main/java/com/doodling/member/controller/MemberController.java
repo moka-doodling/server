@@ -3,6 +3,8 @@ package com.doodling.member.controller;
 import com.doodling.member.dto.MyInfoResponseDTO;
 import com.doodling.member.dto.ChangePasswordDTO;
 
+import com.doodling.member.dto.MySubmissionResponseDTO;
+
 import com.doodling.member.dto.ReissueTokenDTO;
 import com.doodling.member.dto.TokenDTO;
 import com.doodling.member.service.AuthService;
@@ -17,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -68,5 +71,10 @@ public class MemberController {
 	@PatchMapping("/password/{memberId}")
 	public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO, @PathVariable Integer memberId) {
 		return ResponseEntity.ok(memberService.changePassword(memberId, changePasswordDTO));
+	}
+
+	@GetMapping("/{memberId}/mypages")
+	public ResponseEntity<List<MySubmissionResponseDTO>> myAllSubmissions(@PathVariable Integer memberId, @RequestParam("filtering") String filtering) {
+		return ResponseEntity.ok(memberService.getAllMySubmissions(memberId, filtering));
 	}
 }

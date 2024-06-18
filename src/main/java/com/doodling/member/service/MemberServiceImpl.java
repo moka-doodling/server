@@ -5,18 +5,23 @@ import com.doodling.member.dto.MyInfoResponseDTO;
 
 import com.doodling.member.dto.ChangePasswordDTO;
 import com.doodling.member.dto.LoginRequestDTO;
+
+import com.doodling.member.dto.MySubmissionResponseDTO;
+
 import com.doodling.member.dto.ReissueTokenDTO;
 import com.doodling.member.dto.TokenDTO;
 import com.doodling.member.mapper.MemberMapper;
 import com.doodling.security.jwt.JwtTokenProvider;
+import com.doodling.submission.domain.Submission;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -28,8 +33,8 @@ public class MemberServiceImpl implements MemberService {
   private final MemberMapper memberMapper;
   private final JwtTokenProvider jwtTokenProvider;
 
-  @Transactional
   @Override
+  @Transactional
   public void register(LoginRequestDTO dto) {
 
     memberMapper
@@ -42,6 +47,7 @@ public class MemberServiceImpl implements MemberService {
 
   // refresh token 기반으로 access token 새롭게 생성
   @Override
+  @Transactional
   public TokenDTO reissueToken(ReissueTokenDTO reissueTokenDto) {
     boolean isValidRefreshToken = jwtTokenProvider.validRefreshToken(reissueTokenDto.getRefreshToken());
 
@@ -62,6 +68,7 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
+  @Transactional
   public boolean deleteUser(Integer memberId) {
     int result = memberMapper.deleteUserByMemberId(memberId);
     log.info("삭제된 행: " + result);
@@ -85,7 +92,21 @@ public class MemberServiceImpl implements MemberService {
             .build();
   }
 
+  @Override
+  @Transactional
+  public List<MySubmissionResponseDTO> getAllMySubmissions(Integer memberId, String filtering) {
+    List<Submission> result = filtering.equals("ongoing") ? memberMapper.findSubmissionsByMemberIdOngoing(memberId) : memberMapper.findSubmissionsByMemberIdEnded(memberId);
+    log.info("MemberService Result: " + result);
+    return result.stream().map(s -> MySubmissionResponseDTO.builder()
+            .recommendCnt(s.getRecommend_cnt())
+            .submissionId(s.getSubmission_id())
+            .isSelected(s.is_selected())
+            .relayId(s.getRelay_id())
+            .build())
+            .collect(Collectors.toList());
+  }
 
+  @Override
   @Transactional
   public boolean changePassword(Integer memberId, ChangePasswordDTO changePasswordDTO) {
     Optional<Member> optional_member = memberMapper.findByMemberId(memberId);
