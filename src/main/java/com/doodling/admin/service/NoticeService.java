@@ -1,10 +1,10 @@
 package com.doodling.admin.service;
 
-import com.doodling.admin.dto.NoticeInsertRequest;
+import com.doodling.admin.dto.NoticeInsertRequestDTO;
 
 public interface NoticeService {
 
-    public void insertNotice(NoticeInsertRequest request) throws Exception;
+    public void insertNotice(NoticeInsertRequestDTO request) throws Exception;
 
-    public void deleteNotice(Long notice_id) throws Exception;
+    public boolean deleteNotice(Integer noticeId) throws Exception;
 }
