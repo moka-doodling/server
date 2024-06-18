@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doodling.member.mapper.RefreshTokenMapper">
+
+    <insert id="insertRefreshToken" parameterType="RefreshToken">
+        <selectKey keyProperty="tokenId" resultType="Integer" order="AFTER">
+            <![CDATA[
+            SELECT seq_refresh_token.currval AS tokenId FROM dual
+            ]]>
+        </selectKey>
+        <![CDATA[
+        INSERT INTO refresh_token (token_id, refresh_token, member_id, expiredate)
+        VALUES (seq_refresh_token.nextval, #{refreshToken}, #{memberId}, #{expiredate})
+        ]]>
+    </insert>
+
+    <insert id="insertExpiredRefreshToken" parameterType="RefreshToken">
+        <selectKey keyProperty="tokenId" resultType="Integer" order="AFTER">
+            <![CDATA[
+            SELECT seq_expired_refresh_token.currval AS tokenId FROM dual
+            ]]>
+        </selectKey>
+        <![CDATA[
+        INSERT INTO expired_refresh_token (token_id, refresh_token, member_id)
+        VALUES (seq_expired_refresh_token.nextval, #{refreshToken}, #{memberId})
+        ]]>
+    </insert>
+
+    <delete id="delete" parameterType="RefreshToken">
+        <![CDATA[
+        DELETE refresh_token
+        WHERE member_id = #{memberId}
+        AND refresh_token = #{refreshToken}
+        ]]>
+    </delete>
+
+    <delete id="deleteByMemberId" parameterType="Integer">
+        <![CDATA[
+        DELETE refresh_token
+        WHERE member_id = #{memberId}
+        ]]>
+    </delete>
+
+    <select id="countMemberExpiredRefreshToken" parameterType="RefreshToken" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM expired_refresh_token
+        WHERE member_id = #{memberId}
+        AND refresh_token = #{refreshToken}
+        ]]>
+    </select>
+</mapper>

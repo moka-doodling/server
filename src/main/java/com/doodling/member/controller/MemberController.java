@@ -18,6 +18,7 @@ import com.doodling.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -38,29 +39,29 @@ public class MemberController {
 	private static final String PREFIX = "Bearer ";
 
 	@PostMapping("/sign-up")
-	public ResponseEntity<String> signup(@RequestBody LoginRequestDTO dto) {
-		memberService.register(dto);
-
-		return new ResponseEntity<String>("success", HttpStatus.OK);
+	public ResponseEntity<Integer> signup(@RequestBody LoginRequestDTO loginRequestDTO) {
+		return ResponseEntity.ok(memberService.register(loginRequestDTO));
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<Boolean> login(HttpServletResponse response, @RequestBody LoginRequestDTO request) {
-		TokenDTO tokenDTO = authService.login(request);
+	public ResponseEntity<Boolean> login(HttpServletResponse response, @RequestBody LoginRequestDTO loginRequestDTO) {
+		TokenDTO tokenDTO = authService.login(loginRequestDTO);
 		response.setHeader(AUTHORIZATION_HEADER, PREFIX + tokenDTO.getAccessToken());
-		response.setHeader(REFRESH_HEADER, PREFIX + tokenDTO.getAccessToken());
-
+		response.setHeader(REFRESH_HEADER, PREFIX + tokenDTO.getRefreshToken());
 		return ResponseEntity.ok(true);
 	}
 
 	@PostMapping("/refresh")
-	public ResponseEntity<TokenDTO> reissueToken(@RequestBody ReissueTokenDTO reissueTokenDto) {
-		return ResponseEntity.ok(memberService.reissueToken(reissueTokenDto));
+	public ResponseEntity<TokenDTO> reissueToken(@RequestBody ReissueTokenDTO reissueTokenDTO) {
+		return ResponseEntity.ok(memberService.reissueToken(reissueTokenDTO));
 	}
 
 	@DeleteMapping("/{memberId}")
-	public ResponseEntity<Boolean> withdraw(@PathVariable Integer memberId) {
-		return ResponseEntity.ok(memberService.deleteUser(memberId));
+	public ResponseEntity<Boolean> withdraw(HttpServletRequest request, @PathVariable Integer memberId) {
+		String refreshToken = request.getHeader(REFRESH_HEADER);
+		log.info("refresh token at member controller: {}", refreshToken);
+		memberService.deleteUser(memberId, refreshToken);
+		return ResponseEntity.ok(true);
 	}
 
 	@GetMapping("/myinfo/{memberId}")
@@ -69,14 +70,13 @@ public class MemberController {
 	}
 
 	@PatchMapping("/password/{memberId}")
-	public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO, @PathVariable Integer memberId) {
-		return ResponseEntity.ok(memberService.changePassword(memberId, changePasswordDTO));
+	public ResponseEntity<Integer> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO, @PathVariable Integer memberId) {
+		memberService.changePassword(memberId, changePasswordDTO);
+		return ResponseEntity.ok(memberId);
 	}
 
 	@GetMapping("/{memberId}/mypages")
 	public ResponseEntity<List<MySubmissionResponseDTO>> myAllSubmissions(@PathVariable Integer memberId, @RequestParam("filtering") String filtering) {
-		log.info("filtering: " + filtering);
-		log.info("memberId: " + memberId);
 		return ResponseEntity.ok(memberService.getAllMySubmissions(memberId, filtering));
 	}
 }

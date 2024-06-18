@@ -12,12 +12,12 @@ import com.doodling.member.dto.TokenDTO;
 import java.util.List;
 
 public interface MemberService {
-  void register(LoginRequestDTO dto);
+  Integer register(LoginRequestDTO loginRequestDTO);
   TokenDTO reissueToken(ReissueTokenDTO reissueTokenDto);
-  boolean deleteUser(Integer memberId);
+  void deleteUser(Integer memberId, String refreshToken);
   MyInfoResponseDTO getMyInfo(Integer memberId);
 
   List<MySubmissionResponseDTO> getAllMySubmissions(Integer memberId, String filtering);
-  boolean changePassword(Integer memberId, ChangePasswordDTO changePasswordDTO);
+  void changePassword(Integer memberId, ChangePasswordDTO changePasswordDTO);
 
 }
