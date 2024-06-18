@@ -43,6 +43,12 @@
         <security:intercept-url pattern="/member/sign-up"
                                 access="permitAll" />
 
+        <!-- login, sign-up 외에는 모두 권한 필요 -->
+        <!--<security:intercept-url pattern="/**" access="authenticated" />-->
+
+        <security:intercept-url pattern="/**"
+                                access="permitAll" />
+
         <!-- 로그아웃 설정 -->
         <security:logout logout-url="/member/logout"
                          logout-success-url="/login"
