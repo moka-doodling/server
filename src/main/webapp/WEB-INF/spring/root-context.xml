@@ -50,9 +50,10 @@
 	</bean>
 
 	<context:component-scan
-		base-package="com.doodling">
+			base-package="com.doodling">
 	</context:component-scan>
 
 	<mybatis-spring:scan
-		base-package="com.doodling.member.mapper" />
+			base-package="com.doodling.mapper, com.doodling.submission.mapper" />
+  
 </beans>
