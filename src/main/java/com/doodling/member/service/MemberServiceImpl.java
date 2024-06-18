@@ -91,6 +91,7 @@ public class MemberServiceImpl implements MemberService {
             .selected_cnt(member.getSelectedCnt())
             .build();
   }
+
   @Override
   @Transactional
   public List<MySubmissionResponseDTO> getAllMySubmissions(Integer memberId, String filtering) {
