@@ -2,19 +2,18 @@ package com.doodling.submission.controller;
 
 
 import com.doodling.submission.dto.SubmissionDTO;
+import com.doodling.submission.dto.SubmissionRequestDTO;
 import com.doodling.submission.service.SubmissionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/submission/*")
+@RestController
+@RequestMapping("/submission")
 @RequiredArgsConstructor
 @Slf4j
 public class SubmissionController {
@@ -32,4 +31,18 @@ public class SubmissionController {
 
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping
+    public ResponseEntity<Integer> registerSubmission(@RequestBody SubmissionRequestDTO requestDTO) {
+        Integer submissionId = service.registerSubmission(requestDTO);
+        return ResponseEntity.ok(submissionId);
+    }
+
+    @DeleteMapping("/{submission_id}")
+    public ResponseEntity<Integer> deleteSubmission(@PathVariable("submission_id") Integer submissionId) {
+        Integer deletedSubmissionId = service.deleteSubmission(submissionId);
+        return ResponseEntity.ok(deletedSubmissionId);
+    }
+
+
 }

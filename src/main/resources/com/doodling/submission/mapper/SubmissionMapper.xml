@@ -24,4 +24,24 @@
         order by regdate desc
         ]]>
 	</select>
+
+    <insert id="insertSubmission" parameterType="com.doodling.submission.dto.SubmissionRequestDTO">
+        <selectKey keyProperty="submissionId" resultType="java.lang.Integer" order="BEFORE">
+            <![CDATA[
+        SELECT seq_submission.nextval AS submissionId FROM dual
+        ]]>
+        </selectKey>
+        <![CDATA[
+    INSERT INTO submission (submission_id, relay_id, member_id, week, content, sketch)
+    VALUES (#{submissionId}, #{relayId}, #{memberId}, #{week}, #{content}, UTL_RAW.CAST_TO_RAW(#{sketch}))
+    ]]>
+    </insert>
+
+    <update id="deleteSubmission" parameterType="java.lang.Integer">
+        <![CDATA[
+        UPDATE submission
+        SET deletedate = sysdate
+        WHERE submission_id = #{submissionId}
+        ]]>
+    </update>
 </mapper>

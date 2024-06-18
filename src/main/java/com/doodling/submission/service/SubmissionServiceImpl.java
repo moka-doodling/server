@@ -1,10 +1,12 @@
 package com.doodling.submission.service;
 
 import com.doodling.submission.dto.SubmissionDTO;
+import com.doodling.submission.dto.SubmissionRequestDTO;
 import com.doodling.submission.mapper.SubmissionMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,5 +46,18 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .sketch(submission.getSketch())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public Integer registerSubmission(SubmissionRequestDTO requestDTO) {
+        mapper.insertSubmission(requestDTO);
+        return requestDTO.getSubmissionId();
+    }
+
+    @Transactional
+    @Override
+    public Integer deleteSubmission(Integer submissionId) {
+        return mapper.deleteSubmission(submissionId);
     }
 }
