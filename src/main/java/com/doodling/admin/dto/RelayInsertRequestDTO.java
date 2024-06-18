@@ -1,16 +1,13 @@
 package com.doodling.admin.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Data
 public class RelayInsertRequestDTO {
 
     private String title;

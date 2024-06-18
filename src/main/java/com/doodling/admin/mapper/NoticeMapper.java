@@ -5,6 +5,6 @@ import com.doodling.admin.dto.NoticeInsertRequestDTO;
 public interface NoticeMapper {
 
     void insertNotice(NoticeInsertRequestDTO request);
-    void deleteNotice(Integer noticeId);
+    int deleteNotice(Integer noticeId);
 
 }

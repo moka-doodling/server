@@ -1,11 +1,12 @@
 package com.doodling.admin.domain;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 
-@Data
+@AllArgsConstructor
+@RequiredArgsConstructor
+@ToString
 @Builder
 public class Notice {
 

@@ -15,24 +15,16 @@ public class NoticeServiceImpl implements NoticeService {
 
     // 공지사항 등록
     @Override
-    public void insertNotice(NoticeInsertRequestDTO request) throws Exception {
-        try {
-            log.info("insert notice -> " + request);
-            mapper.insertNotice(request);
-        } catch (Exception e) {
-            log.warn(e.getMessage());
-            throw e;
-        }
+    public void insertNotice(NoticeInsertRequestDTO request) {
+        log.info("insert notice -> " + request);
+        mapper.insertNotice(request);
     }
 
     @Override
-    public void deleteNotice(Integer noticeId) throws Exception {
-        try {
-            log.info("delete notice -> " + noticeId);
-            mapper.deleteNotice(noticeId);
-        } catch (Exception e) {
-            log.warn(e.getMessage());
-            throw e;
-        }
+    public boolean deleteNotice(Integer noticeId) {
+        log.info("delete notice -> " + noticeId);
+        int result = mapper.deleteNotice(noticeId);
+
+        return result == 1;
     }
 }

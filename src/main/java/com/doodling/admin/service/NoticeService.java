@@ -6,5 +6,5 @@ public interface NoticeService {
 
     public void insertNotice(NoticeInsertRequestDTO request) throws Exception;
 
-    public void deleteNotice(Integer noticeId) throws Exception;
+    public boolean deleteNotice(Integer noticeId) throws Exception;
 }
