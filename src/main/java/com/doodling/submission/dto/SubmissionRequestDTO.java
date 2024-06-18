@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @Builder
 @RequiredArgsConstructor
-public class SubmissionRequestDto {
+public class SubmissionRequestDTO {
 
     private Integer submissionId;
     private Integer relayId;
