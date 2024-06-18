@@ -9,4 +9,14 @@
             values (seq_relay.nextval, #{startdate}, #{enddate}, #{title}, #{age}, UTL_RAW.CAST_TO_RAW(#{cover}))
         ]]>
 	</insert>
+
+    <update id="deleteRelay" parameterType="java.lang.Integer">
+        <![CDATA[
+            update relay
+            set is_end = case
+                when sysdate >= enddate then 1
+                else is_end end
+            where relay_id = #{relayId}
+        ]]>
+	</update>
 </mapper>
