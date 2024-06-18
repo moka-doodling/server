@@ -1,9 +1,9 @@
 package com.doodling.recommend.service;
 
-import com.doodling.recommend.domain.Recommend;
+import com.doodling.recommend.dto.RecommendRequestDTO;
 
 public interface RecommendService {
 
-    boolean recommend(Recommend recommend);
+    boolean recommend(RecommendRequestDTO recommendRequestDTO);
 
 }
