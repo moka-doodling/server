@@ -13,6 +13,14 @@
         ]]>
 	</select>
 
+    <select id="findByMemberId" resultType="Member"
+            parameterType="Integer">
+        <![CDATA[
+        SELECT member_id memberId, username, password, roles
+        FROM member
+        WHERE member_id = #{memberId}
+        ]]>
+	</select>
 
     <select id="countTotal" resultType="Long">
         <![CDATA[
@@ -32,6 +40,13 @@
         <![CDATA[
         UPDATE member
         SET deletedate = SYSDATE
+        WHERE member_id = #{memberId}
+        ]]>
+    </update>
+    <update id="changePassword" parameterType="Member">
+        <![CDATA[
+        UPDATE member
+        SET password = #{password}
         WHERE member_id = #{memberId}
         ]]>
     </update>

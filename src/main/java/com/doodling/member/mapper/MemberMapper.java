@@ -10,4 +10,6 @@ public interface MemberMapper {
 	Long countTotal();
 	void insert(Member member);
 	int deleteUserByMemberId(Integer memberId);
+	Optional<Member> findByMemberId(Integer memberId);
+	int changePassword(Member member);
 }
