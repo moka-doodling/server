@@ -1,11 +1,13 @@
 package com.doodling.submission.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Blob;
 import java.util.Date;
 
 @Data
+@Builder
 public class Submission {
 
     private int submission_id;
@@ -16,7 +18,7 @@ public class Submission {
     private Date deletedate;
     private int week;
     private String content;
-    private boolean is_selected;
-    private Blob sketch;
+    private int is_selected;
+    private String sketch;
 
 }

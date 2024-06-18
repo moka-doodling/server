@@ -1,7 +1,9 @@
 package com.doodling.submission.service;
 
+import com.doodling.submission.domain.Submission;
 import com.doodling.submission.dto.SubmissionDTO;
 import com.doodling.submission.dto.SubmissionRequestDTO;
+import com.doodling.submission.dto.SubmissionResponseDTO;
 import com.doodling.submission.mapper.SubmissionMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,13 +53,42 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Transactional
     @Override
     public Integer registerSubmission(SubmissionRequestDTO requestDTO) {
-        mapper.insertSubmission(requestDTO);
-        return requestDTO.getSubmissionId();
+        Submission submission = Submission.builder()
+                .relay_id(requestDTO.getRelayId())
+                .member_id(requestDTO.getMemberId())
+                .week(requestDTO.getWeek())
+                .content(requestDTO.getContent())
+                .sketch(requestDTO.getSketch())
+                .build();
+
+        mapper.insertSubmission(submission);
+
+        return submission.getSubmission_id();
     }
+
 
     @Transactional
     @Override
     public Integer deleteSubmission(Integer submissionId) {
         return mapper.deleteSubmission(submissionId);
+    }
+
+    @Transactional
+    @Override
+    public List<SubmissionResponseDTO> selectSubmissionsByRelayIdAndIsSelected(int relay_id, int is_selected) {
+        return mapper.selectSubmissionsByRelayIdAndIsSelected(relay_id, is_selected).stream()
+                .map(submission -> {
+                    return SubmissionResponseDTO.builder()
+                            .submissionId(submission.getSubmission_id())
+                            .relayId(submission.getRelay_id())
+                            .memberId(submission.getMember_id())
+                            .week(submission.getWeek())
+                            .content(submission.getContent())
+                            .sketch(submission.getSketch())
+                            .regdate(submission.getRegdate())
+                            .recommendCnt(submission.getRecommend_cnt())
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 }
