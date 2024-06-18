@@ -7,5 +7,6 @@ import java.util.List;
 public interface RelayService {
 
     List<RelayResponseDTO> getAllBookRelays();
+    List<RelayResponseDTO> getAllRelays(String filtering);
     RelayDetailResponseDTO getBookRelayDetail(Integer relayId);
 }
