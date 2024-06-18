@@ -1,4 +1,4 @@
-package com.doodling.domain;
+package com.doodling.admin.domain;
 
 import lombok.Data;
 
