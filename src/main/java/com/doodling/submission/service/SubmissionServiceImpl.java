@@ -1,26 +1,48 @@
 package com.doodling.submission.service;
 
-import com.doodling.submission.dto.SubmissionRequestDto;
-import com.doodling.submission.dto.SubmissionResponseDto;
+import com.doodling.submission.dto.SubmissionDTO;
 import com.doodling.submission.mapper.SubmissionMapper;
-
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Slf4j
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SubmissionServiceImpl implements SubmissionService {
 
-    private final SubmissionMapper submissionMapper;
+    private final SubmissionMapper mapper;
 
-    @Transactional
     @Override
-    public SubmissionResponseDto registerSubmission(SubmissionRequestDto request) {
-        submissionMapper.insertSubmission(request);
+    public List<SubmissionDTO> selectSubmissionByRecommendCount(int relay_id, int week) {
+        return mapper.selectSubmissionByRecommendCount(relay_id, week).stream()
+                .map(submission -> SubmissionDTO.builder()
+                        .submission_id(submission.getSubmission_id())
+                        .member_id(submission.getMember_id())
+                        .recommend_cnt(submission.getRecommend_cnt())
+                        .regdate(submission.getRegdate())
+                        .deletedate(submission.getDeletedate())
+                        .content(submission.getContent())
+                        .sketch(submission.getSketch())
+                        .build())
+                .collect(Collectors.toList());
+    }
 
-        return SubmissionResponseDto.builder()
-                .submissionId(request.getSubmissionId())
-                .build();;
+    @Override
+    public List<SubmissionDTO> selectSubmissionByRegisterDate(int relay_id, int week) {
+        return mapper.selectSubmissionByRegisterDate(relay_id, week).stream()
+                .map(submission -> SubmissionDTO.builder()
+                        .submission_id(submission.getSubmission_id())
+                        .member_id(submission.getMember_id())
+                        .recommend_cnt(submission.getRecommend_cnt())
+                        .regdate(submission.getRegdate())
+                        .deletedate(submission.getDeletedate())
+                        .content(submission.getContent())
+                        .sketch(submission.getSketch())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
