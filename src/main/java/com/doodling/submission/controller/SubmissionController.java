@@ -2,6 +2,7 @@ package com.doodling.submission.controller;
 
 
 import com.doodling.submission.dto.SubmissionDTO;
+import com.doodling.submission.dto.SubmissionDetailResponseDTO;
 import com.doodling.submission.dto.SubmissionRequestDTO;
 import com.doodling.submission.dto.SubmissionResponseDTO;
 import com.doodling.submission.service.SubmissionService;
@@ -51,5 +52,9 @@ public class SubmissionController {
         return ResponseEntity.ok(response);
     }
 
-
+    @GetMapping("/{submissionId}")
+    public ResponseEntity<SubmissionDetailResponseDTO> getSubmissionById(@PathVariable("submissionId") Integer submissionId) {
+        SubmissionDetailResponseDTO response = service.getSubmissionById(submissionId);
+            return ResponseEntity.ok(response);
+    }
 }

@@ -2,6 +2,7 @@ package com.doodling.submission.service;
 
 import com.doodling.submission.domain.Submission;
 import com.doodling.submission.dto.SubmissionDTO;
+import com.doodling.submission.dto.SubmissionDetailResponseDTO;
 import com.doodling.submission.dto.SubmissionRequestDTO;
 import com.doodling.submission.dto.SubmissionResponseDTO;
 import com.doodling.submission.mapper.SubmissionMapper;
@@ -87,5 +88,17 @@ public class SubmissionServiceImpl implements SubmissionService {
                             .build();
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public SubmissionDetailResponseDTO getSubmissionById(Integer submissionId) {
+        Submission submission = mapper.selectSubmissionById(submissionId);
+            return SubmissionDetailResponseDTO.builder()
+                    .relayId(submission.getRelayId())
+                    .content(submission.getContent())
+                    .sketch(submission.getSketch())
+                    .recommendCnt(submission.getRecommendCnt())
+                    .regdate(submission.getRegdate())
+                    .build();
     }
 }

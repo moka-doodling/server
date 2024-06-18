@@ -1,6 +1,7 @@
 package com.doodling.submission.service;
 
 import com.doodling.submission.dto.SubmissionDTO;
+import com.doodling.submission.dto.SubmissionDetailResponseDTO;
 import com.doodling.submission.dto.SubmissionRequestDTO;
 import com.doodling.submission.dto.SubmissionResponseDTO;
 
@@ -17,4 +18,6 @@ public interface SubmissionService {
     Integer deleteSubmission(Integer submissionId);
 
     List<SubmissionResponseDTO> selectSubmissionsByRelayIdAndIsSelected(Integer relayId, Boolean isSelected);
+
+    SubmissionDetailResponseDTO getSubmissionById(Integer submissionId);
 }
