@@ -63,10 +63,10 @@ public class MemberController {
 	@GetMapping("/myinfo/{memberId}")
 	public ResponseEntity<MyInfoResponseDTO> myInfo(@PathVariable Integer memberId) {
 		return ResponseEntity.ok(memberService.getMyInfo(memberId));
+	}
 
 	@PatchMapping("/password/{memberId}")
 	public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO, @PathVariable Integer memberId) {
 		return ResponseEntity.ok(memberService.changePassword(memberId, changePasswordDTO));
-
 	}
 }
