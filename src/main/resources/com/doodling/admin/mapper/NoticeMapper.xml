@@ -10,11 +10,11 @@
         ]]>
 	</insert>
 
-    <update id="deleteNotice" parameterType="long">
+    <update id="deleteNotice" parameterType="java.lang.Integer">
         <![CDATA[
             update notice
             set deletedate = sysdate
-            where notice_id = ${notice_id}
+            where notice_id = ${noticeId}
         ]]>
 	</update>
 </mapper>

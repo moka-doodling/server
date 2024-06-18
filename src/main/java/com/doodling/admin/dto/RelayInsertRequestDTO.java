@@ -5,13 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class NoticeInsertRequest {
+public class RelayInsertRequestDTO {
 
     private String title;
-    private String content;
+    private String cover;
+    private Integer age;
+    private Date startdate;
+    private Date enddate;
 
 }

@@ -1,10 +1,10 @@
 package com.doodling.admin.mapper;
 
-import com.doodling.admin.dto.NoticeInsertRequest;
+import com.doodling.admin.dto.NoticeInsertRequestDTO;
 
 public interface NoticeMapper {
 
-    public void insertNotice(NoticeInsertRequest request);
-    public void deleteNotice(Long notice_id);
+    void insertNotice(NoticeInsertRequestDTO request);
+    void deleteNotice(Integer noticeId);
 
 }
