@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doodling.admin.mapper.SubmissionMapper">
+    <select id="selectSubmissionByRecommendCount" resultType="com.doodling.submission.dto.SubmissionResponse">
+        <![CDATA[
+            select submission_id, member_id, recommend_cnt, regdate, deletedate, content, sketch
+            from submission
+            where deletedate is null
+              and week=#{week}
+              and relay_id=#{relay_id}
+            order by recommend_cnt desc
+        ]]>
+	</select>
+
+    <select id="selectSubmissionByRegisterDate" resultType="com.doodling.submission.dto.SubmissionResponse">
+        <![CDATA[
+        select submission_id, member_id, recommend_cnt, regdate, deletedate, content, sketch
+        from submission
+        where deletedate is null
+          and week=#{week}
+          and relay_id=#{relay_id}
+        order by recommend_cnt desc
+        ]]>
+	</select>
+</mapper>

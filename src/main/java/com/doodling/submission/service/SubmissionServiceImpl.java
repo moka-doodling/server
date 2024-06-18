@@ -1,26 +1,27 @@
 package com.doodling.submission.service;
 
-import com.doodling.submission.dto.SubmissionRequestDto;
-import com.doodling.submission.dto.SubmissionResponseDto;
+import com.doodling.submission.dto.SubmissionResponse;
 import com.doodling.submission.mapper.SubmissionMapper;
-
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+@Slf4j
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SubmissionServiceImpl implements SubmissionService {
 
-    private final SubmissionMapper submissionMapper;
+    private SubmissionMapper mapper;
 
-    @Transactional
     @Override
-    public SubmissionResponseDto registerSubmission(SubmissionRequestDto request) {
-        submissionMapper.insertSubmission(request);
+    public List<SubmissionResponse> selectSubmissionByRecommendCount(int relay_id, int week) {
+        return mapper.selectSubmissionByRecommendCount();
+    }
 
-        return SubmissionResponseDto.builder()
-                .submissionId(request.getSubmissionId())
-                .build();;
+    @Override
+    public List<SubmissionResponse> selectSubmissionByRegisterDate(int relay_id, int week) {
+        return mapper.selectSubmissionByRegisterDate();
     }
 }

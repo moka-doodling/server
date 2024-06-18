@@ -1,9 +1,12 @@
 package com.doodling.submission.mapper;
 
-import com.doodling.submission.dto.SubmissionRequestDto;
-import org.apache.ibatis.annotations.Mapper;
+import com.doodling.submission.dto.SubmissionResponse;
 
-@Mapper
+import java.util.List;
+
 public interface SubmissionMapper {
-    void insertSubmission(SubmissionRequestDto requestDto);
+
+    public List<SubmissionResponse> selectSubmissionByRecommendCount();
+
+    public List<SubmissionResponse> selectSubmissionByRegisterDate();
 }
