@@ -5,5 +5,6 @@ import com.doodling.admin.dto.RelayInsertRequestDTO;
 public interface AdminRelayService {
 
     void insertRelay(RelayInsertRequestDTO request);
+    boolean deleteRelay(Integer relayId);
 
 }
