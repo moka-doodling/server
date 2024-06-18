@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doodling.recommend.mapper.RecommendMapper">
+
+    <insert id="insertRecommend" parameterType="Recommend">
+        INSERT INTO recommend (recommend_id, member_id, submission_id)
+        VALUES (seq_recommend.nextval, #{memberId}, #{submissionId})
+    </insert>
+
+    <select id="countRecommendByMemberId" parameterType="Recommend">
+         SELECT count(*) from recommend
+         WHERE member_id=#{memberId}
+           AND submission_id=#{submissionId}
+    </select>
+
+</mapper>
