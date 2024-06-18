@@ -15,20 +15,15 @@ public class AdminRelayServiceImpl implements AdminRelayService {
     private final AdminRelayMapper mapper;
 
     @Override
-    public void insertRelay(RelayInsertRequestDTO request) throws Exception {
-        try {
-            Relay relay = Relay.builder()
-                    .title(request.getTitle())
-                    .cover(request.getCover())
-                    .age(request.getAge())
-                    .startdate(request.getStartdate())
-                    .enddate(request.getEnddate())
-                    .build();
-            log.info("insert relay -> " + relay);
-            mapper.insertRelay(relay);
-        } catch (Exception e) {
-            log.warn(e.getMessage());
-            throw e;
-        }
+    public void insertRelay(RelayInsertRequestDTO request) {
+        Relay relay = Relay.builder()
+                .title(request.getTitle())
+                .cover(request.getCover())
+                .age(request.getAge())
+                .startdate(request.getStartdate())
+                .enddate(request.getEnddate())
+                .build();
+        log.info("insert relay -> " + relay);
+        mapper.insertRelay(relay);
     }
 }
