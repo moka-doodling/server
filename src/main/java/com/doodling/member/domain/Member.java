@@ -21,6 +21,7 @@ public class Member {
 	private String username;
 	private String password;
 	private String roles;
+	private Integer selectedCnt;
 
 	public List<String> getRoleList() {
 		if (this.roles != null && this.roles.length() > 0) {
