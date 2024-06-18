@@ -1,7 +1,8 @@
 package com.doodling.submission.service;
 
 import com.doodling.submission.domain.Submission;
-import com.doodling.submission.dto.SubmissionDTO;
+import com.doodling.submission.dto.SubmissionIsSelectedResponseDTO;
+import com.doodling.submission.dto.SubmissionMySubmitResponseDTO;
 import com.doodling.submission.dto.SubmissionRequestDTO;
 import com.doodling.submission.dto.SubmissionResponseDTO;
 import com.doodling.submission.mapper.SubmissionMapper;
@@ -72,20 +73,30 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     @Transactional
     @Override
-    public List<SubmissionResponseDTO> selectSubmissionsByRelayIdAndIsSelected(Integer relayId, Boolean isSelected) {
+    public List<SubmissionIsSelectedResponseDTO> selectSubmissionsByRelayIdAndIsSelected(Integer relayId, Boolean isSelected) {
         return mapper.selectSubmissionsByRelayIdAndIsSelected(relayId, isSelected).stream()
                 .map(submission -> {
-                    return SubmissionResponseDTO.builder()
+                    return SubmissionIsSelectedResponseDTO.builder()
                             .submissionId(submission.getSubmissionId())
-                            .relayId(submission.getRelayId())
                             .memberId(submission.getMemberId())
                             .week(submission.getWeek())
                             .content(submission.getContent())
                             .sketch(submission.getSketch())
-                            .regdate(submission.getRegdate())
-                            .recommendCnt(submission.getRecommendCnt())
                             .build();
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public SubmissionMySubmitResponseDTO getMySubmission(Integer relayId, Integer week, Integer memberId) {
+        Submission submission = mapper.selectMySubmission(relayId, week, memberId);
+        return SubmissionMySubmitResponseDTO.builder()
+                .submissionId(submission.getSubmissionId())
+                .content(submission.getContent())
+                .sketch(submission.getSketch())
+                .recommendCnt(submission.getRecommendCnt())
+                .regdate(submission.getRegdate())
+                .build();
     }
 }
