@@ -1,12 +1,16 @@
 package com.doodling.submission.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Blob;
 import java.util.Date;
 
-@Data
-public class SubmissionResponse {
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
+@RequiredArgsConstructor
+public class SubmissionDTO {
 
     private int submission_id;
     private int member_id;
@@ -15,5 +19,4 @@ public class SubmissionResponse {
     private Date deletedate;
     private String content;
     private Blob sketch;
-
 }

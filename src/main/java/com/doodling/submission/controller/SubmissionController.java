@@ -1,33 +1,35 @@
 package com.doodling.submission.controller;
 
 
-import com.doodling.submission.dto.SubmissionResponse;
+import com.doodling.submission.dto.SubmissionDTO;
 import com.doodling.submission.service.SubmissionService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/submission/*")
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Slf4j
 public class SubmissionController {
 
-    private SubmissionService service;
+    private final SubmissionService service;
 
     @GetMapping("/list")
-    public List<SubmissionResponse> getRecommendList(@RequestParam int relay_id, @RequestParam int week, @RequestParam String sort) {
-        List<SubmissionResponse> response;
+    public ResponseEntity<List<SubmissionDTO>> getRecommendList(@RequestParam int relay_id, @RequestParam int week, @RequestParam String sort) {
+        List<SubmissionDTO> response;
         if (sort.equals("recommend")) {
             response = service.selectSubmissionByRecommendCount(relay_id, week);
         } else {
             response = service.selectSubmissionByRegisterDate(relay_id, week);
         }
 
-        return response;
+        return ResponseEntity.ok(response);
     }
 }

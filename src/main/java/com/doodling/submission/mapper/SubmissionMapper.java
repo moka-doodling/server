@@ -1,12 +1,13 @@
 package com.doodling.submission.mapper;
 
-import com.doodling.submission.dto.SubmissionResponse;
+import com.doodling.submission.domain.Submission;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface SubmissionMapper {
 
-    public List<SubmissionResponse> selectSubmissionByRecommendCount();
+    List<Submission> selectSubmissionByRecommendCount(@Param("relay_id") int relay_id, @Param("week") int week);
 
-    public List<SubmissionResponse> selectSubmissionByRegisterDate();
+    List<Submission> selectSubmissionByRegisterDate(@Param("relay_id") int relay_id, @Param("week") int week);
 }
