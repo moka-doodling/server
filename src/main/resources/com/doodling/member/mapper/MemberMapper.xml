@@ -30,11 +30,16 @@
 	</select>
 
     <insert id="insert" parameterType="Member">
-	    <![CDATA[
-        INSERT INTO member(member_id, username, password, roles)
-        VALUES (seq_member.nextval, #{username}, #{password}, #{roles})
+        <selectKey keyProperty="memberId" resultType="Integer" order="AFTER">
+            <![CDATA[
+            SELECT seq_member.currval AS memberId FROM dual
+            ]]>
+        </selectKey>
+        <![CDATA[
+            INSERT INTO member(member_id, username, password, roles)
+            VALUES (seq_member.nextval, #{username}, #{password}, #{roles})
         ]]>
-	</insert>
+    </insert>
 
     <select id="findSubmissionsByMemberIdOngoing" parameterType="Integer" resultType="com.doodling.submission.domain.Submission">
     <![CDATA[
