@@ -17,7 +17,10 @@ public enum ErrorCode {
   /* code: 401 */
   INVALID_AUTH_TOKEN(UNAUTHORIZED, "권한 정보가 없는 토큰입니다."),
   INVALID_USERNAME(UNAUTHORIZED, "username이 올바르지 않습니다."),
-  INVALID_MEMBER_ID(UNAUTHORIZED, "member Id가 올바르지 않습니다.");
+  INVALID_MEMBER_ID(UNAUTHORIZED, "member Id가 올바르지 않습니다."),
+
+  /* code: 500 */
+  FAIL_TO_DELETE(UNAUTHORIZED, "삭제에 실패했습니다.");
 
   private final HttpStatus httpStatus;
   private final String detail;
