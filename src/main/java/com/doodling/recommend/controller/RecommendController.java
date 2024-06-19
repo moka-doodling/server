@@ -29,7 +29,13 @@ public class RecommendController {
     }
 
     @GetMapping("/check")
-    public ResponseEntity<Boolean> checkRecommend(@RequestBody RecommendRequestDTO recommendRequestDTO) {
+    public ResponseEntity<Boolean> checkRecommend(
+            @RequestParam("memberId") Integer memberId,
+            @RequestParam("submissionId") Integer submissionId) {
+        RecommendRequestDTO recommendRequestDTO = RecommendRequestDTO.builder()
+                .memberId(memberId)
+                .submissionId(submissionId)
+                .build();
         //true면 추천 O, false면 추천 X
         return new ResponseEntity<Boolean>(service.isRecommend(recommendRequestDTO), HttpStatus.OK);
     }
