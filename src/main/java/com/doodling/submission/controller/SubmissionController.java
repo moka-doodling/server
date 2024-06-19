@@ -1,8 +1,10 @@
 package com.doodling.submission.controller;
 
-
-import com.doodling.submission.dto.SubmissionDTO;
 import com.doodling.submission.dto.SubmissionDetailResponseDTO;
+
+import com.doodling.submission.dto.SubmissionIsSelectedResponseDTO;
+import com.doodling.submission.dto.SubmissionMySubmitResponseDTO;
+
 import com.doodling.submission.dto.SubmissionRequestDTO;
 import com.doodling.submission.dto.SubmissionResponseDTO;
 import com.doodling.submission.service.SubmissionService;
@@ -47,8 +49,17 @@ public class SubmissionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SubmissionResponseDTO>> getSelectedSubmissions(@RequestParam Integer relayId, @RequestParam Boolean isSelected) {
-        List<SubmissionResponseDTO> response = service.selectSubmissionsByRelayIdAndIsSelected(relayId, isSelected);
+    public ResponseEntity<List<SubmissionIsSelectedResponseDTO>> getSelectedSubmissions(@RequestParam Integer relayId, @RequestParam Boolean isSelected) {
+        List<SubmissionIsSelectedResponseDTO> response = service.selectSubmissionsByRelayIdAndIsSelected(relayId, isSelected);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<SubmissionMySubmitResponseDTO> getMySubmission(
+            @RequestParam Integer relayId,
+            @RequestParam Integer week,
+            @RequestParam Integer memberId) {
+        SubmissionMySubmitResponseDTO response = service.getMySubmission(relayId, week, memberId);
         return ResponseEntity.ok(response);
     }
 
