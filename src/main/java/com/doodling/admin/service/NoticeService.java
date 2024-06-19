@@ -13,8 +13,6 @@ public interface NoticeService {
     boolean deleteNotice(Integer noticeId);
 
     NoticeResponseDTO getNotice(Integer noticeId);
-  
-    public boolean deleteNotice(Integer noticeId);
 
     public List<NoticeListResponseDTO> getNoticeList();
 }
