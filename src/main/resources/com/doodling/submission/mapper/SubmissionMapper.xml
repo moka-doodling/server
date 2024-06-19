@@ -46,8 +46,31 @@
     </update>
 
     <select id="selectSubmissionsByRelayIdAndIsSelected" resultType="Submission">
-        SELECT * FROM submission
-        WHERE relay_id = #{relayId}
+    <![CDATA[
+        SELECT submission_id submissionId,
+               member_id memberId,
+               week,
+               content,
+               TO_CHAR(sketch) sketch
+        FROM submission
+        WHERE deletedate is null
+          AND relay_id = #{relayId}
           AND is_selected = #{isSelected}
+        ]]>
+    </select>
+
+    <select id="selectMySubmission" resultType="Submission">
+    <![CDATA[
+        SELECT submission_id submissionId,
+               content content,
+               TO_CHAR(sketch) sketch,
+               recommend_cnt recommendCnt,
+               regdate regdate
+        FROM submission
+        where deletedate is null
+          AND relay_id = #{relayId}
+          AND week = #{week}
+          AND member_id = #{memberId}
+        ]]>
     </select>
 </mapper>

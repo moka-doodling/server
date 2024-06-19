@@ -17,4 +17,6 @@ public interface SubmissionMapper {
     Integer deleteSubmission(Integer submissionId);
 
     List<Submission> selectSubmissionsByRelayIdAndIsSelected(@Param("relayId") Integer relayId, @Param("isSelected") Boolean isSelected);
+
+    Submission selectMySubmission(@Param("relayId") Integer relayId, @Param("week") Integer week, @Param("memberId") Integer memberId);
 }
