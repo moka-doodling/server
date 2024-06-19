@@ -3,27 +3,41 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.doodling.submission.mapper.SubmissionMapper">
-    <select id="selectSubmissionByRecommendCount" resultType="Submission">
-        <![CDATA[
-            select submission_id submissionId, member_id memberId, recommend_cnt recommendCnt, regdate, deletedate, content, TO_CHAR(sketch) sketch
-            from submission
-            where deletedate is null
-              and relay_id=#{relayId}
-              and week=#{week}
-            order by recommend_cnt desc
+    <select id="selectSubmissionByRecommendCount" resultType="OtherSubmission">
+    <![CDATA[
+        select
+            s.submission_id submissionId,
+            m.username,
+            s.recommend_cnt recommendCnt,
+            s.regdate,
+            s.content,
+            TO_CHAR(s.sketch) sketch
+        from submission s
+                 join member m on s.member_id = m.member_id
+        where s.deletedate is null
+          and s.relay_id = #{relayId}
+          and s.week = #{week}
+        order by s.recommend_cnt desc
         ]]>
-	</select>
+    </select>
 
-    <select id="selectSubmissionByRegisterDate" resultType="Submission">
-        <![CDATA[
-        select submission_id submissionId, member_id memberId, recommend_cnt recommendCnt, regdate, deletedate, content, TO_CHAR(sketch) sketch
-        from submission
-        where deletedate is null
-          and relay_id=#{relayId}
-          and week=#{week}
-        order by regdate desc
+    <select id="selectSubmissionByRegisterDate" resultType="OtherSubmission">
+    <![CDATA[
+        select
+            s.submission_id submissionId,
+            m.username,
+            s.recommend_cnt recommendCnt,
+            s.regdate,
+            s.content,
+            TO_CHAR(s.sketch) sketch
+        from submission s
+                 join member m on s.member_id = m.member_id
+        where s.deletedate is null
+          and s.relay_id = #{relayId}
+          and s.week = #{week}
+        order by regdate desc;
         ]]>
-	</select>
+    </select>
 
     <insert id="insertSubmission" parameterType="Submission">
         <selectKey keyProperty="submissionId" resultType="java.lang.Integer" order="BEFORE">
