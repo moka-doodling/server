@@ -54,7 +54,7 @@
           AND s.member_id = #{memberId}
         ORDER BY s.regdate DESC
         ]]>
-</select>
+    </select>
 
     <select id="findSubmissionsByMemberIdEnded" parameterType="Integer" resultType="Submission">
         <![CDATA[
@@ -78,6 +78,7 @@
         WHERE member_id = #{memberId}
         ]]>
     </update>
+
     <update id="changePassword" parameterType="Member">
         <![CDATA[
         UPDATE member
@@ -85,4 +86,13 @@
         WHERE member_id = #{memberId}
         ]]>
     </update>
+
+    <update id="updateSelectedCnt" parameterType="java.lang.Integer">
+        <![CDATA[
+            update member
+            set selected_cnt = selected_cnt + 1
+            where member_id = #{memberId}
+        ]]>
+    </update>
+
 </mapper>
