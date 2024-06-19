@@ -73,4 +73,16 @@
           AND member_id = #{memberId}
         ]]>
     </select>
+
+    <select id="selectSubmissionById" resultType="Submission">
+        <![CDATA[
+        SELECT relay_id relayId,
+               content,
+               TO_CHAR(sketch) sketch,
+               regdate,
+               recommend_cnt recommendCnt
+        FROM submission
+        WHERE submission_id = #{submissionId}
+        ]]>
+    </select>
 </mapper>
