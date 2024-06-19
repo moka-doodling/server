@@ -1,18 +1,12 @@
 package com.doodling.member.controller;
 
-import com.doodling.member.dto.MyInfoResponseDTO;
-import com.doodling.member.dto.ChangePasswordDTO;
+import com.doodling.member.dto.*;
 
-import com.doodling.member.dto.MySubmissionResponseDTO;
-
-import com.doodling.member.dto.ReissueTokenDTO;
-import com.doodling.member.dto.TokenDTO;
 import com.doodling.member.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.doodling.member.dto.LoginRequestDTO;
 import com.doodling.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,8 +33,8 @@ public class MemberController {
 	private static final String PREFIX = "Bearer ";
 
 	@PostMapping("/sign-up")
-	public ResponseEntity<Integer> signup(@RequestBody LoginRequestDTO loginRequestDTO) {
-		return ResponseEntity.ok(memberService.register(loginRequestDTO));
+	public ResponseEntity<Integer> signup(@RequestBody SignupRequestDTO signupRequestDTO) {
+		return ResponseEntity.ok(memberService.register(signupRequestDTO));
 	}
 
 	@PostMapping("/login")
