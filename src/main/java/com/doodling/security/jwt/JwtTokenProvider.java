@@ -49,9 +49,7 @@ public class JwtTokenProvider implements InitializingBean {
    * @return Access Token
    * 유효기간 : 3시간
    */
-  public String generateAccessToken(Member member) {
-    long now = new Date().getTime();
-
+  public String generateAccessToken(Member member, long now) {
     return Jwts.builder()
             .setSubject(member.getUsername())
             .claim(AUTHORITIES_KEY, member.getRoles())
@@ -67,9 +65,7 @@ public class JwtTokenProvider implements InitializingBean {
    * @return Refresh Token
    * 유효기간 14일 (2주)
    */
-  public String generateRefreshToken(Member member) {
-    long now = new Date().getTime();
-
+  public String generateRefreshToken(Member member, long now) {
     return Jwts.builder()
             .setSubject(member.getUsername())
             .claim(AUTHORITIES_KEY, member.getRoles())
@@ -86,15 +82,14 @@ public class JwtTokenProvider implements InitializingBean {
 
     log.info("authentication: " + authentication.getName());
 
-    String accessToken = generateAccessToken(((PrincipalDetails) authentication.getPrincipal()).getMember());
-    String refreshToken = generateRefreshToken(((PrincipalDetails) authentication.getPrincipal()).getMember());
-
-    log.info("accessToken: " + accessToken.toString());
-    log.info("refreshToken: " + refreshToken.toString());
+    long now = new Date().getTime();
+    String accessToken = generateAccessToken(((PrincipalDetails) authentication.getPrincipal()).getMember(), now);
+    String refreshToken = generateRefreshToken(((PrincipalDetails) authentication.getPrincipal()).getMember(), now);
 
     return TokenDTO.builder()
             .accessToken(accessToken)
             .refreshToken(refreshToken)
+            .refreshTokenExpiredate(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
             .build();
   }
 

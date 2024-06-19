@@ -10,6 +10,10 @@ import static org.springframework.http.HttpStatus.*;
 @Getter
 public enum ErrorCode {
 
+  /* code: 400*/
+  DUPLICATE_REFRESH_TOKEN(BAD_REQUEST, "이미 만료된 리프레시 토큰입니다."),
+  FAIL_TO_DELETE(UNAUTHORIZED, "삭제에 실패했습니다."),
+
   /* code: 401 */
   INVALID_USERNAME(UNAUTHORIZED, "username이 올바르지 않습니다."),
   MEMBER_NOT_FOUND(UNAUTHORIZED, "회원 정보를 찾을 수 없습니다."),

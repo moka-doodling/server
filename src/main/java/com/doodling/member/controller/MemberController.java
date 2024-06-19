@@ -18,6 +18,7 @@ import com.doodling.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class MemberController {
 	public ResponseEntity<Boolean> login(HttpServletResponse response, @RequestBody LoginRequestDTO loginRequestDTO) {
 		TokenDTO tokenDTO = authService.login(loginRequestDTO);
 		response.setHeader(AUTHORIZATION_HEADER, PREFIX + tokenDTO.getAccessToken());
-		response.setHeader(REFRESH_HEADER, PREFIX + tokenDTO.getAccessToken());
+		response.setHeader(REFRESH_HEADER, PREFIX + tokenDTO.getRefreshToken());
 		return ResponseEntity.ok(true);
 	}
 
@@ -56,8 +57,10 @@ public class MemberController {
 	}
 
 	@DeleteMapping("/{memberId}")
-	public ResponseEntity<Boolean> withdraw(@PathVariable Integer memberId) {
-		memberService.deleteUser(memberId);
+	public ResponseEntity<Boolean> withdraw(HttpServletRequest request, @PathVariable Integer memberId) {
+		String refreshToken = request.getHeader(REFRESH_HEADER);
+		log.info("refresh token at member controller: {}", refreshToken);
+		memberService.deleteUser(memberId, refreshToken);
 		return ResponseEntity.ok(true);
 	}
 

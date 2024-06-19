@@ -38,7 +38,11 @@
 		<property name="dataSource" ref="dataSource"></property>
 		<!-- 리턴 타입을 VO로 잡을 때 앞 패키지 계층을 넣지 않으려면 -->
 		<property name="typeAliasesPackage"
-				  value="com.doodling.member.domain, com.doodling.admin.domain, com.doodling.submission.domain, com.doodling.recommend.domain, com.doodling.relay.domain">
+				  value="com.doodling.member.domain,
+				  com.doodling.admin.domain,
+				  com.doodling.submission.domain,
+				  com.doodling.recommend.domain,
+				  com.doodling.relay.domain">
 
 		</property>
 	</bean>
