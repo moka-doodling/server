@@ -8,4 +8,6 @@ public interface RecommendService {
 
     boolean unrecommend(RecommendRequestDTO recommendRequestDTO);
 
+    boolean isRecommend(RecommendRequestDTO recommendRequestDTO);
+
 }

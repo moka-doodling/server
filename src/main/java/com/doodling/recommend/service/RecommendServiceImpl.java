@@ -1,5 +1,7 @@
 package com.doodling.recommend.service;
 
+import com.doodling.exception.CustomException;
+import com.doodling.exception.ErrorCode;
 import com.doodling.recommend.domain.Recommend;
 import com.doodling.recommend.dto.RecommendRequestDTO;
 import com.doodling.recommend.mapper.RecommendMapper;
@@ -37,6 +39,18 @@ public class RecommendServiceImpl implements RecommendService {
                 .submissionId(recommendRequestDTO.getSubmissionId())
                 .build();
         int result = recommendMapper.cancelRecommend(recommend);
+
+        return result == 1;
+    }
+
+    @Override
+    public boolean isRecommend(RecommendRequestDTO recommendRequestDTO) {
+        Recommend recommend = Recommend.builder()
+                .memberId(recommendRequestDTO.getMemberId())
+                .submissionId(recommendRequestDTO.getSubmissionId())
+                .build();
+
+        int result = recommendMapper.countRecommendByMemberId(recommend);
 
         return result == 1;
     }
