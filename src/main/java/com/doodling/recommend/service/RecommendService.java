@@ -4,9 +4,9 @@ import com.doodling.recommend.dto.RecommendRequestDTO;
 
 public interface RecommendService {
 
-    boolean recommend(RecommendRequestDTO recommendRequestDTO);
+    Integer recommend(RecommendRequestDTO recommendRequestDTO);
 
-    boolean unrecommend(RecommendRequestDTO recommendRequestDTO);
+    Integer unrecommend(RecommendRequestDTO recommendRequestDTO);
 
     boolean isRecommend(RecommendRequestDTO recommendRequestDTO);
 

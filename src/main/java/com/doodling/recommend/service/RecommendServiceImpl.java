@@ -19,32 +19,33 @@ public class RecommendServiceImpl implements RecommendService {
     private final SubmissionMapper submissionMapper;
 
     @Override
-    public boolean recommend(RecommendRequestDTO recommendRequestDTO) {
+    public Integer recommend(RecommendRequestDTO recommendRequestDTO) {
         Recommend recommend = Recommend.builder()
                 .memberId(recommendRequestDTO.getMemberId())
                 .submissionId(recommendRequestDTO.getSubmissionId())
                 .build();
 
-        log.info(recommend.toString());
-        int result = recommendMapper.countRecommendByMemberId(recommend);
-        if (result == 0) {
-            recommendMapper.insertRecommend(recommend);
-            submissionMapper.increaseRecommendCnt(recommendRequestDTO.getSubmissionId());
-            return true;
-        }
-        return false;
+        recommendMapper.insertRecommend(recommend);
+        submissionMapper.increaseRecommendCnt(recommendRequestDTO.getSubmissionId());
+
+        return submissionMapper
+                .selectSubmissionById(recommendRequestDTO.getSubmissionId())
+                .getRecommendCnt();
     }
 
     @Override
-    public boolean unrecommend(RecommendRequestDTO recommendRequestDTO) {
+    public Integer unrecommend(RecommendRequestDTO recommendRequestDTO) {
         Recommend recommend = Recommend.builder()
                 .memberId(recommendRequestDTO.getMemberId())
                 .submissionId(recommendRequestDTO.getSubmissionId())
                 .build();
-        int result = recommendMapper.cancelRecommend(recommend);
+
+        recommendMapper.cancelRecommend(recommend);
         submissionMapper.decreaseRecommendCnt(recommendRequestDTO.getSubmissionId());
 
-        return result == 1;
+        return submissionMapper
+                .selectSubmissionById(recommendRequestDTO.getSubmissionId())
+                .getRecommendCnt();
     }
 
     @Override

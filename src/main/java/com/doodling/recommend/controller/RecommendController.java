@@ -19,13 +19,13 @@ public class RecommendController {
     private final RecommendService service;
 
     @PostMapping("")
-    public ResponseEntity<Boolean> recommend(@RequestBody RecommendRequestDTO recommendRequestDTO) {
-        return new ResponseEntity<Boolean>(service.recommend(recommendRequestDTO), HttpStatus.OK);
+    public ResponseEntity<Integer> recommend(@RequestBody RecommendRequestDTO recommendRequestDTO) {
+        return new ResponseEntity<Integer>(service.recommend(recommendRequestDTO), HttpStatus.OK);
     }
 
     @DeleteMapping ("")
-    public ResponseEntity<Boolean> cancelRecommend(@RequestBody RecommendRequestDTO recommendRequestDTO) {
-        return new ResponseEntity<Boolean>(service.unrecommend(recommendRequestDTO), HttpStatus.OK);
+    public ResponseEntity<Integer> cancelRecommend(@RequestBody RecommendRequestDTO recommendRequestDTO) {
+        return new ResponseEntity<Integer>(service.unrecommend(recommendRequestDTO), HttpStatus.OK);
     }
 
     @GetMapping("/check")
