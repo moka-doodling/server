@@ -43,6 +43,9 @@
         <security:intercept-url pattern="/member/sign-up"
                                 access="permitAll" />
 
+        <security:intercept-url pattern="/admin/**"
+                                access="hasRole('ROLE_ADMIN')" />
+
         <!-- login, sign-up 외에는 모두 권한 필요 -->
         <!--<security:intercept-url pattern="/**" access="authenticated" />-->
 

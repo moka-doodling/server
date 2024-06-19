@@ -31,8 +31,8 @@ public class JwtTokenProvider implements InitializingBean {
 
   private static final String AUTHORITIES_KEY = "auth";
   private static final String PREFIX = "Bearer";
-  private static long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24; // 1��
-  private static long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 2; // 2��
+  private static long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 3; // 1��
+  private static long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7 * 2; // 2��
 
   private Key key;
 
