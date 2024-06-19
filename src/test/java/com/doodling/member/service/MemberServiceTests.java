@@ -1,6 +1,7 @@
 package com.doodling.member.service;
 
 import com.doodling.member.dto.LoginRequestDTO;
+import com.doodling.member.dto.SignupRequestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +25,7 @@ public class MemberServiceTests {
   public void registerTest() {
     IntStream.range(0, 100).forEach(i -> {
       memberService.register(
-              LoginRequestDTO.builder()
+              SignupRequestDTO.builder()
                       .username("user"+i)
                       .password("123"+i)
                       .build());
