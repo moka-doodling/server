@@ -17,4 +17,16 @@
             where notice_id = ${noticeId}
         ]]>
 	</update>
+
+    <select id="getNotice" parameterType="java.lang.Integer" resultType="Notice">
+        <![CDATA[
+        SELECT
+            title,
+            content,
+            regdate
+        FROM notice
+        WHERE deletedate IS NULL
+          AND notice_id = ${noticeId}
+        ]]>
+    </select>
 </mapper>

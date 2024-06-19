@@ -1,6 +1,8 @@
 package com.doodling.admin.service;
 
+import com.doodling.admin.domain.Notice;
 import com.doodling.admin.dto.NoticeInsertRequestDTO;
+import com.doodling.admin.dto.NoticeResponseDTO;
 import com.doodling.admin.mapper.NoticeMapper;
 import com.doodling.exception.CustomException;
 import com.doodling.exception.ErrorCode;
@@ -30,5 +32,16 @@ public class NoticeServiceImpl implements NoticeService {
         if (result == 0) throw new CustomException(ErrorCode.FAIL_TO_DELETE);
 
         return result == 1;
+    }
+
+    @Override
+    public NoticeResponseDTO getNotice(Integer noticeId) {
+        Notice notice = mapper.getNotice(noticeId);
+
+        return NoticeResponseDTO.builder()
+                .title(notice.getTitle())
+                .content(notice.getContent())
+                .regdate(notice.getRegdate())
+                .build();
     }
 }
