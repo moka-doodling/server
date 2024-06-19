@@ -27,12 +27,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JwtTokenProvider implements InitializingBean {
 
+  /* TODO: secret 보호 */
   private static final String secret = "your-secure-secret-key-your-secure-secret-key-your-secure-secret-key";
 
   private static final String AUTHORITIES_KEY = "auth";
   private static final String PREFIX = "Bearer";
-  private static long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 3; // 1��
-  private static long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7 * 2; // 2��
+  private static long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 30분
+  private static long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7 * 2; // 2주
 
   private Key key;
 

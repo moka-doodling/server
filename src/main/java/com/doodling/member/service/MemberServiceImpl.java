@@ -3,15 +3,8 @@ package com.doodling.member.service;
 import com.doodling.exception.CustomException;
 import com.doodling.member.domain.Member;
 import com.doodling.member.domain.RefreshToken;
-import com.doodling.member.dto.MyInfoResponseDTO;
+import com.doodling.member.dto.*;
 
-import com.doodling.member.dto.ChangePasswordDTO;
-import com.doodling.member.dto.LoginRequestDTO;
-
-import com.doodling.member.dto.MySubmissionResponseDTO;
-
-import com.doodling.member.dto.ReissueTokenDTO;
-import com.doodling.member.dto.TokenDTO;
 import com.doodling.member.mapper.MemberMapper;
 import com.doodling.member.mapper.RefreshTokenMapper;
 import com.doodling.security.jwt.JwtTokenProvider;
@@ -24,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -43,13 +35,17 @@ public class MemberServiceImpl implements MemberService {
   private final RefreshTokenMapper refreshTokenMapper;
   private final JwtTokenProvider jwtTokenProvider;
 
+  private final static String PREFIX = "Bearer ";
+
   @Override
   @Transactional
-  public Integer register(LoginRequestDTO loginRequestDTO) {
+  public Integer register(SignupRequestDTO signupRequestDTO) {
+
+    if (!signupRequestDTO.getPassword().equals(signupRequestDTO.getPasswordValidation())) throw new CustomException(PASSWORD_NOT_MATCH);
 
     Member member = Member.builder()
-            .username(loginRequestDTO.getUsername())
-            .password(passwordEncoder.encode(loginRequestDTO.getPassword()))
+            .username(signupRequestDTO.getUsername())
+            .password(passwordEncoder.encode(signupRequestDTO.getPassword()))
             .roles("ROLE_USER")
             .build();
     memberMapper.insert(member);
@@ -90,9 +86,9 @@ public class MemberServiceImpl implements MemberService {
       throw new CustomException(DUPLICATE_REFRESH_TOKEN);
 
     return TokenDTO.builder().accessToken(
-            jwtTokenProvider
-                    .generateAccessToken(optional_member.get(), new Date().getTime()))
-                    .refreshToken(pureRefreshToken)
+                    PREFIX + jwtTokenProvider
+                            .generateAccessToken(optional_member.get(), new Date().getTime()))
+            .refreshToken(PREFIX + pureRefreshToken)
             .build();
   }
 
