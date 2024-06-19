@@ -2,13 +2,8 @@ package com.doodling.submission.service;
 
 import com.doodling.submission.domain.Submission;
 
-import com.doodling.submission.dto.SubmissionDetailResponseDTO;
+import com.doodling.submission.dto.*;
 
-import com.doodling.submission.dto.SubmissionIsSelectedResponseDTO;
-import com.doodling.submission.dto.SubmissionMySubmitResponseDTO;
-
-import com.doodling.submission.dto.SubmissionRequestDTO;
-import com.doodling.submission.dto.SubmissionResponseDTO;
 import com.doodling.submission.mapper.SubmissionMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,12 +20,13 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final SubmissionMapper mapper;
 
+    @Transactional
     @Override
-    public List<SubmissionResponseDTO> selectSubmissionByRecommendCount(Integer relayId, Integer week) {
+    public List<SubmissionOtherListResponseDTO> selectSubmissionByRecommendCount(Integer relayId, Integer week) {
         return mapper.selectSubmissionByRecommendCount(relayId, week).stream()
-                .map(submission -> SubmissionResponseDTO.builder()
+                .map(submission -> SubmissionOtherListResponseDTO.builder()
                         .submissionId(submission.getSubmissionId())
-                        .memberId(submission.getMemberId())
+                        .username(submission.getUsername())
                         .recommendCnt(submission.getRecommendCnt())
                         .regdate(submission.getRegdate())
                         .content(submission.getContent())
@@ -39,12 +35,13 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
-    public List<SubmissionResponseDTO> selectSubmissionByRegisterDate(Integer relayId, Integer week) {
+    public List<SubmissionOtherListResponseDTO> selectSubmissionByRegisterDate(Integer relayId, Integer week) {
         return mapper.selectSubmissionByRegisterDate(relayId, week).stream()
-                .map(submission -> SubmissionResponseDTO.builder()
+                .map(submission -> SubmissionOtherListResponseDTO.builder()
                         .submissionId(submission.getSubmissionId())
-                        .memberId(submission.getMemberId())
+                        .username(submission.getUsername())
                         .recommendCnt(submission.getRecommendCnt())
                         .regdate(submission.getRegdate())
                         .content(submission.getContent())

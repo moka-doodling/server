@@ -1,12 +1,7 @@
 package com.doodling.submission.controller;
 
-import com.doodling.submission.dto.SubmissionDetailResponseDTO;
+import com.doodling.submission.dto.*;
 
-import com.doodling.submission.dto.SubmissionIsSelectedResponseDTO;
-import com.doodling.submission.dto.SubmissionMySubmitResponseDTO;
-
-import com.doodling.submission.dto.SubmissionRequestDTO;
-import com.doodling.submission.dto.SubmissionResponseDTO;
 import com.doodling.submission.service.SubmissionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +20,8 @@ public class SubmissionController {
     private final SubmissionService service;
 
     @GetMapping("/list")
-    public ResponseEntity<List<SubmissionResponseDTO>> getRecommendList(@RequestParam Integer relayId, @RequestParam Integer week, @RequestParam String sort) {
-        List<SubmissionResponseDTO> response;
+    public ResponseEntity<List<SubmissionOtherListResponseDTO>> getRecommendList(@RequestParam Integer relayId, @RequestParam Integer week, @RequestParam String sort) {
+        List<SubmissionOtherListResponseDTO> response;
         if (sort.equals("recommend")) {
             response = service.selectSubmissionByRecommendCount(relayId, week);
         } else {
