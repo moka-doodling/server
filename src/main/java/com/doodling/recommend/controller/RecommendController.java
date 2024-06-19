@@ -28,4 +28,10 @@ public class RecommendController {
         return new ResponseEntity<Boolean>(service.unrecommend(recommendRequestDTO), HttpStatus.OK);
     }
 
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkRecommend(@RequestBody RecommendRequestDTO recommendRequestDTO) {
+        //true면 추천 O, false면 추천 X
+        return new ResponseEntity<Boolean>(service.isRecommend(recommendRequestDTO), HttpStatus.OK);
+    }
+
 }
