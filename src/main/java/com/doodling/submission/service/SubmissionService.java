@@ -20,8 +20,6 @@ public interface SubmissionService {
 
     Integer deleteSubmission(Integer submissionId);
 
-    List<SubmissionResponseDTO> selectSubmissionsByRelayIdAndIsSelected(Integer relayId, Boolean isSelected);
-
     SubmissionDetailResponseDTO getSubmissionById(Integer submissionId);
 
     List<SubmissionIsSelectedResponseDTO> selectSubmissionsByRelayIdAndIsSelected(Integer relayId, Boolean isSelected);

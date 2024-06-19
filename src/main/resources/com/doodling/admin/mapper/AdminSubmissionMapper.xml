@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doodling.admin.mapper.AdminSubmissionMapper">
+    <select id="selectMember" parameterType="java.lang.Integer">
+        select MEMBER_ID
+        from SUBMISSION
+        where SUBMISSION_ID = #{submissionId}
+    </select>
+
+    <update id="selectSubmission" parameterType="java.lang.Integer">
+        <![CDATA[
+            update SUBMISSION s
+            set s.IS_SELECTED = 1
+            where s.SUBMISSION_ID = #{submissionId}
+              and s.DELETEDATE is null
+              and exists(
+                  select 1
+                  from MEMBER m
+                  where m.MEMBER_ID = s.MEMBER_ID
+                    and m.DELETEDATE is null
+              )
+              and to_char(sysdate, 'D') = 4 -- 일요일=0, 오늘은 4
+        ]]>
+	</update>
+
+</mapper>

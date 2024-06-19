@@ -16,4 +16,5 @@ public interface MemberMapper {
 	int changePassword(Member member);
 	List<Submission> findSubmissionsByMemberIdOngoing(Integer memberId);
 	List<Submission> findSubmissionsByMemberIdEnded(Integer memberId);
+	int updateSelectedCnt(Integer memberId);
 }
