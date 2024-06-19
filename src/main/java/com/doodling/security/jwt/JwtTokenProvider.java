@@ -90,7 +90,6 @@ public class JwtTokenProvider implements InitializingBean {
     return TokenDTO.builder()
             .accessToken(accessToken)
             .refreshToken(refreshToken)
-            .refreshTokenExpiredate(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
             .build();
   }
 

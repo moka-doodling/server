@@ -1,9 +1,9 @@
 package com.doodling.member.service;
 
 import com.doodling.member.dto.LoginRequestDTO;
-import com.doodling.member.dto.TokenDTO;
+import com.doodling.member.dto.LoginResponseDTO;
 
 public interface AuthService {
 
-  TokenDTO login(LoginRequestDTO request);
+  LoginResponseDTO login(LoginRequestDTO request);
 }

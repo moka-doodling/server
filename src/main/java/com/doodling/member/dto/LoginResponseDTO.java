@@ -3,18 +3,16 @@ package com.doodling.member.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @AllArgsConstructor
-@RequiredArgsConstructor
-@Getter
+@NoArgsConstructor
 @Builder
-@ToString
-public class TokenDTO {
-
+@Getter
+public class LoginResponseDTO {
   private String accessToken;
   private String refreshToken;
+  private Integer memberId;
 }
