@@ -9,6 +9,9 @@ public interface NoticeMapper {
 
     void insertNotice(NoticeInsertRequestDTO request);
     int deleteNotice(Integer noticeId);
+
+    Notice getNotice(Integer noticeId);
+
     List<Notice> getNoticeList();
 
 }

@@ -1,7 +1,11 @@
 package com.doodling.admin.controller;
 
 import com.doodling.admin.dto.NoticeInsertRequestDTO;
+
+import com.doodling.admin.dto.NoticeResponseDTO;
+
 import com.doodling.admin.dto.NoticeListResponseDTO;
+
 import com.doodling.admin.service.NoticeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,6 +43,11 @@ public class AdminNoticeController {
     public ResponseEntity<List<NoticeListResponseDTO>> getNoticeList() {
         List<NoticeListResponseDTO> response = service.getNoticeList();
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/notice/list/{noticeId}")
+    public ResponseEntity<NoticeResponseDTO> getNotice(@PathVariable Integer noticeId) {
+        return ResponseEntity.ok(service.getNotice(noticeId));
     }
 
 }
