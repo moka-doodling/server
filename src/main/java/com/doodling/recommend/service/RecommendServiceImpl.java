@@ -5,6 +5,7 @@ import com.doodling.exception.ErrorCode;
 import com.doodling.recommend.domain.Recommend;
 import com.doodling.recommend.dto.RecommendRequestDTO;
 import com.doodling.recommend.mapper.RecommendMapper;
+import com.doodling.submission.mapper.SubmissionMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class RecommendServiceImpl implements RecommendService {
 
     private final RecommendMapper recommendMapper;
+    private final SubmissionMapper submissionMapper;
 
     @Override
     public boolean recommend(RecommendRequestDTO recommendRequestDTO) {
@@ -27,6 +29,7 @@ public class RecommendServiceImpl implements RecommendService {
         int result = recommendMapper.countRecommendByMemberId(recommend);
         if (result == 0) {
             recommendMapper.insertRecommend(recommend);
+            submissionMapper.increaseRecommendCnt(recommendRequestDTO.getSubmissionId());
             return true;
         }
         return false;
@@ -39,6 +42,7 @@ public class RecommendServiceImpl implements RecommendService {
                 .submissionId(recommendRequestDTO.getSubmissionId())
                 .build();
         int result = recommendMapper.cancelRecommend(recommend);
+        submissionMapper.decreaseRecommendCnt(recommendRequestDTO.getSubmissionId());
 
         return result == 1;
     }

@@ -99,4 +99,20 @@
         WHERE submission_id = #{submissionId}
         ]]>
     </select>
+
+    <update id="increaseRecommendCnt" parameterType="java.lang.Integer">
+        <![CDATA[
+            UPDATE submission
+            SET recommend_cnt = recommend_cnt + 1
+            WHERE submission_id = #{submissionId}
+        ]]>
+    </update>
+
+    <update id="decreaseRecommendCnt" parameterType="java.lang.Integer">
+        <![CDATA[
+            UPDATE submission
+            SET recommend_cnt = recommend_cnt - 1
+            WHERE submission_id = #{submissionId}
+        ]]>
+    </update>
 </mapper>
