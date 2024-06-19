@@ -2,7 +2,6 @@ package com.doodling.submission.dto;
 
 import lombok.*;
 
-import java.sql.Blob;
 import java.util.Date;
 
 @Getter
@@ -10,13 +9,12 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @RequiredArgsConstructor
-public class SubmissionDTO {
+public class SubmissionIsSelectedResponseDTO {
 
-    private int submission_id;
-    private int member_id;
-    private int recommend_cnt;
-    private Date regdate;
-    private Date deletedate;
+    private Integer submissionId;
+    private Integer memberId;
+    private Integer week;
     private String content;
     private String sketch;
+
 }
