@@ -8,6 +8,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 @ToString
 @Builder
+@Getter
 public class Notice {
 
     private Integer noticeId;

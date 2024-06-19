@@ -1,11 +1,14 @@
 package com.doodling.admin.controller;
 
 import com.doodling.admin.dto.NoticeInsertRequestDTO;
+import com.doodling.admin.dto.NoticeListResponseDTO;
 import com.doodling.admin.service.NoticeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -21,7 +24,7 @@ public class AdminNoticeController {
     }
 
     @PatchMapping("/notice/{noticeId}")
-    public ResponseEntity<String> delete(@PathVariable Integer noticeId) throws Exception {
+    public ResponseEntity<String> delete(@PathVariable Integer noticeId) {
         boolean result = service.deleteNotice(noticeId);
 
         if (result) {
@@ -30,7 +33,12 @@ public class AdminNoticeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to delete notice");
         }
+    }
 
+    @GetMapping("/notice/list")
+    public ResponseEntity<List<NoticeListResponseDTO>> getNoticeList() {
+        List<NoticeListResponseDTO> response = service.getNoticeList();
+        return ResponseEntity.ok(response);
     }
 
 }
