@@ -2,13 +2,20 @@ package com.doodling.admin.service;
 
 import com.doodling.admin.domain.Notice;
 import com.doodling.admin.dto.NoticeInsertRequestDTO;
+
 import com.doodling.admin.dto.NoticeResponseDTO;
+
+import com.doodling.admin.dto.NoticeListResponseDTO;
+
 import com.doodling.admin.mapper.NoticeMapper;
 import com.doodling.exception.CustomException;
 import com.doodling.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -43,5 +50,19 @@ public class NoticeServiceImpl implements NoticeService {
                 .content(notice.getContent())
                 .regdate(notice.getRegdate())
                 .build();
+    }
+  
+    @Override
+    public List<NoticeListResponseDTO> getNoticeList() {
+        List<Notice> result = mapper.getNoticeList();
+
+        return result.stream()
+                .map(notice -> NoticeListResponseDTO.builder()
+                        .noticeId(notice.getNoticeId())
+                        .title(notice.getTitle())
+                        .content(notice.getContent())
+                        .regdate(notice.getRegdate())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
