@@ -29,4 +29,15 @@ public class RecommendServiceImpl implements RecommendService {
         }
         return false;
     }
+
+    @Override
+    public boolean unrecommend(RecommendRequestDTO recommendRequestDTO) {
+        Recommend recommend = Recommend.builder()
+                .memberId(recommendRequestDTO.getMemberId())
+                .submissionId(recommendRequestDTO.getSubmissionId())
+                .build();
+        int result = recommendMapper.cancelRecommend(recommend);
+
+        return result == 1;
+    }
 }
