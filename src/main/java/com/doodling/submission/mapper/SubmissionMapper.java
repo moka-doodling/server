@@ -22,4 +22,8 @@ public interface SubmissionMapper {
     Submission selectSubmissionById(Integer submissionId);
 
     Submission selectMySubmission(@Param("relayId") Integer relayId, @Param("week") Integer week, @Param("memberId") Integer memberId);
+
+    int increaseRecommendCnt(Integer submissionId);
+
+    int decreaseRecommendCnt(Integer submissionId);
 }
