@@ -15,4 +15,11 @@
            AND submission_id=#{submissionId}
     </select>
 
+    <delete id="cancelRecommend" parameterType="Recommend">
+        delete from RECOMMEND
+        where MEMBER_ID=#{memberId}
+          and submission_id=#{submissionId}
+    </delete>
+
+
 </mapper>

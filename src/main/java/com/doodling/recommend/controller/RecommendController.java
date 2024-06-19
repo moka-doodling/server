@@ -23,4 +23,9 @@ public class RecommendController {
         return new ResponseEntity<Boolean>(service.recommend(recommendRequestDTO), HttpStatus.OK);
     }
 
+    @DeleteMapping ("")
+    public ResponseEntity<Boolean> cancelRecommend(@RequestBody RecommendRequestDTO recommendRequestDTO) {
+        return new ResponseEntity<Boolean>(service.unrecommend(recommendRequestDTO), HttpStatus.OK);
+    }
+
 }

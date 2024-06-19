@@ -6,4 +6,6 @@ public interface RecommendService {
 
     boolean recommend(RecommendRequestDTO recommendRequestDTO);
 
+    boolean unrecommend(RecommendRequestDTO recommendRequestDTO);
+
 }

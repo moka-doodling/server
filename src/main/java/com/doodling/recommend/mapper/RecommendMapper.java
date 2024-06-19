@@ -7,4 +7,5 @@ public interface RecommendMapper {
 
     void insertRecommend(Recommend recommend);
     int countRecommendByMemberId(Recommend recommend);
+    int cancelRecommend(Recommend recommend);
 }
