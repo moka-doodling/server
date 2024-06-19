@@ -38,11 +38,11 @@ public class MemberController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<Boolean> login(HttpServletResponse response, @RequestBody LoginRequestDTO loginRequestDTO) {
-		TokenDTO tokenDTO = authService.login(loginRequestDTO);
-		response.setHeader(AUTHORIZATION_HEADER, PREFIX + tokenDTO.getAccessToken());
-		response.setHeader(REFRESH_HEADER, PREFIX + tokenDTO.getRefreshToken());
-		return ResponseEntity.ok(true);
+	public ResponseEntity<Integer> login(HttpServletResponse response, @RequestBody LoginRequestDTO loginRequestDTO) {
+		LoginResponseDTO loginResponseDTO = authService.login(loginRequestDTO);
+		response.setHeader(AUTHORIZATION_HEADER, PREFIX + loginResponseDTO.getAccessToken());
+		response.setHeader(REFRESH_HEADER, PREFIX + loginResponseDTO.getRefreshToken());
+		return ResponseEntity.ok(loginResponseDTO.getMemberId());
 	}
 
 	@PostMapping("/refresh")
