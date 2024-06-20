@@ -105,6 +105,9 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Transactional
     public SubmissionMySubmitResponseDTO getMySubmission(Integer relayId, Integer week, Integer memberId) {
         Submission submission = mapper.selectMySubmission(relayId, week, memberId);
+        if (submission == null) {
+            return null;
+        }
         return SubmissionMySubmitResponseDTO.builder()
                 .submissionId(submission.getSubmissionId())
                 .content(submission.getContent())
