@@ -18,4 +18,5 @@ public interface MemberMapper {
 	List<MySubmission> findSubmissionsByMemberIdOngoing(Integer memberId);
 	List<MySubmission> findSubmissionsByMemberIdEnded(Integer memberId);
 	int updateSelectedCnt(Integer memberId);
+	int countMembersByUsername(String username);
 }
