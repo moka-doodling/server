@@ -15,19 +15,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
 @AllArgsConstructor
-public class AdminNoticeController {
+public class NoticeController {
 
     private final NoticeService service;
 
-    @PostMapping("/notice")
+    @PostMapping("/admin/notice")
     public ResponseEntity<String> insert(@RequestBody NoticeInsertRequestDTO request) throws Exception {
         service.insertNotice(request);
         return ResponseEntity.ok("success to insert notify");
     }
 
-    @PatchMapping("/notice/{noticeId}")
+    @PatchMapping("/admin/notice/{noticeId}")
     public ResponseEntity<String> delete(@PathVariable Integer noticeId) {
         boolean result = service.deleteNotice(noticeId);
 
@@ -39,15 +38,25 @@ public class AdminNoticeController {
         }
     }
 
-    @GetMapping("/notice/list")
-    public ResponseEntity<List<NoticeListResponseDTO>> getNoticeList() {
+    @GetMapping("/admin/notice/list")
+    public ResponseEntity<List<NoticeListResponseDTO>> getNoticeListForAdmin() {
         List<NoticeListResponseDTO> response = service.getNoticeList();
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/notice/list/{noticeId}")
-    public ResponseEntity<NoticeResponseDTO> getNotice(@PathVariable Integer noticeId) {
+    @GetMapping("/notice/list")
+    public ResponseEntity<List<NoticeListResponseDTO>> getNoticeListForMember() {
+        List<NoticeListResponseDTO> response = service.getNoticeList();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/admin/notice/list/{noticeId}")
+    public ResponseEntity<NoticeResponseDTO> getNoticeForAdmin(@PathVariable Integer noticeId) {
         return ResponseEntity.ok(service.getNotice(noticeId));
     }
 
+    @GetMapping("/notice/list/{noticeId}")
+    public ResponseEntity<NoticeResponseDTO> getNoticeForMember(@PathVariable Integer noticeId) {
+        return ResponseEntity.ok(service.getNotice(noticeId));
+    }
 }
