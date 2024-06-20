@@ -20,4 +20,19 @@
               and is_end = 0
         ]]>
 	</update>
+
+    <select id="selectAllRelays" resultType="Relay">
+        <![CDATA[
+            SELECT
+                relay_id as relayId,
+                startdate,
+                enddate,
+                title,
+                age,
+                TO_CHAR(cover),
+                is_end as isEnd
+            FROM relay
+            ORDER BY startdate DESC
+        ]]>
+    </select>
 </mapper>
