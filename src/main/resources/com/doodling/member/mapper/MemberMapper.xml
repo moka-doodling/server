@@ -103,4 +103,11 @@
         ]]>
     </update>
 
+    <select id="countMembersByUsername" parameterType="String" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(username)
+            FROM member
+            WHERE username = #{username}
+        ]]>
+    </select>
 </mapper>

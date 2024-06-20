@@ -18,13 +18,13 @@ public class RelayController {
 
     private final RelayService relayService;
 
-    @GetMapping("/book/all")
+    @GetMapping("/book/all") // 완성된 책(종료된 릴레이) 모두 조회
     public ResponseEntity<List<RelayResponseDTO>> getAllBookRelays() {
         List<RelayResponseDTO> relayResponseDTOs = relayService.getAllBookRelays();
         return ResponseEntity.ok(relayResponseDTOs);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all") // 공모전
     public ResponseEntity<List<RelayResponseDTO>> getAllRelays(@RequestParam("filtering") String filtering) {
         return ResponseEntity.ok(relayService.getAllRelays(filtering));
     }
