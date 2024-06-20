@@ -1,6 +1,7 @@
 package com.doodling.filter;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -15,7 +16,13 @@ public class CorsFilter implements Filter {
     response.setHeader("Access-Control-Max-Age", "3600");
     response.setHeader("Access-Control-Allow-Headers", "x-requested-with, origin, content-type, accept, Authorization, Refresh");
     response.setHeader("Access-Control-Expose-Headers", "auth, refresh");
-    chain.doFilter(req, res);
+
+    // preflight request 가 들어왔을 때 OK 응답
+    if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) req).getMethod())) {
+      response.setStatus(HttpServletResponse.SC_OK);
+    } else {
+      chain.doFilter(req, res);
+    }
   }
 
   @Override
