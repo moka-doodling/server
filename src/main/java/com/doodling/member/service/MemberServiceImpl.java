@@ -2,6 +2,7 @@ package com.doodling.member.service;
 
 import com.doodling.exception.CustomException;
 import com.doodling.member.domain.Member;
+import com.doodling.member.domain.MySubmission;
 import com.doodling.member.domain.RefreshToken;
 import com.doodling.member.dto.*;
 
@@ -41,7 +42,8 @@ public class MemberServiceImpl implements MemberService {
   @Transactional
   public Integer register(SignupRequestDTO signupRequestDTO) {
 
-    if (!signupRequestDTO.getPassword().equals(signupRequestDTO.getPasswordValidation())) throw new CustomException(PASSWORD_NOT_MATCH);
+    if (!signupRequestDTO.getPassword().equals(signupRequestDTO.getPasswordValidation()))
+      throw new CustomException(PASSWORD_NOT_MATCH);
 
     Member member = Member.builder()
             .username(signupRequestDTO.getUsername())
@@ -60,7 +62,8 @@ public class MemberServiceImpl implements MemberService {
     log.info("reissueTokenDto: {}", reissueTokenDto);
 
     String refreshToken = reissueTokenDto.getRefreshToken();
-    if (!(StringUtils.hasText(refreshToken) && refreshToken.startsWith("Bearer "))) throw new JwtException("유효하지 않은 refresh 토큰입니다.");
+    if (!(StringUtils.hasText(refreshToken) && refreshToken.startsWith("Bearer ")))
+      throw new JwtException("유효하지 않은 refresh 토큰입니다.");
 
     // Bearer 와 같은 prefix를 제외한 순수한 Refresh token
     String pureRefreshToken = refreshToken.substring(7);
@@ -97,7 +100,8 @@ public class MemberServiceImpl implements MemberService {
   public void deleteUser(Integer memberId, String refreshToken) {
     if (memberMapper.deleteUserByMemberId(memberId) == 0) throw new CustomException(DATABASE_ERROR);
 
-    if (!(StringUtils.hasText(refreshToken) && refreshToken.startsWith("Bearer "))) throw new JwtException("유효하지 않은 refresh 토큰입니다.");
+    if (!(StringUtils.hasText(refreshToken) && refreshToken.startsWith("Bearer ")))
+      throw new JwtException("유효하지 않은 refresh 토큰입니다.");
 
     // Bearer 와 같은 prefix를 제외한 순수한 Refresh token
     String pureRefreshToken = refreshToken.substring(7);
@@ -132,14 +136,18 @@ public class MemberServiceImpl implements MemberService {
   @Override
   @Transactional
   public List<MySubmissionResponseDTO> getAllMySubmissions(Integer memberId, String filtering) {
-    List<Submission> result = filtering.equals("ongoing") ? memberMapper.findSubmissionsByMemberIdOngoing(memberId) : memberMapper.findSubmissionsByMemberIdEnded(memberId);
+    List<MySubmission> result = filtering.equals("ongoing") ? memberMapper.findSubmissionsByMemberIdOngoing(memberId) : memberMapper.findSubmissionsByMemberIdEnded(memberId);
     log.info("MemberService Result: " + result);
-    return result.stream().map(s -> MySubmissionResponseDTO.builder()
-            .recommendCnt(s.getRecommendCnt())
-            .submissionId(s.getSubmissionId())
-            .isSelected(s.getIsSelected())
-            .relayId(s.getRelayId())
-            .build())
+    return result.stream().map(s ->
+                    MySubmissionResponseDTO.builder()
+                            .recommendCnt(s.getRecommendCnt())
+                            .submissionId(s.getSubmissionId())
+                            .isSelected(s.getIsSelected())
+                            .relayId(s.getRelayId())
+                            .sketch(s.getSketch())
+                            .title(s.getTitle())
+                            .regdate(s.getRegdate())
+                            .build())
             .collect(Collectors.toList());
   }
 

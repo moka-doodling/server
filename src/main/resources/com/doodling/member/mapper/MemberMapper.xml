@@ -41,13 +41,17 @@
         ]]>
     </insert>
 
-    <select id="findSubmissionsByMemberIdOngoing" parameterType="Integer" resultType="com.doodling.submission.domain.Submission">
-    <![CDATA[
+    <select id="findSubmissionsByMemberIdOngoing" parameterType="Integer" resultType="MySubmission">
+        <![CDATA[
         SELECT s.submission_id AS submissionId,
                s.relay_id AS relayId,
+               s.member_id AS memberId,
                s.is_selected AS isSelected,
                (SELECT COUNT(*) FROM recommend l WHERE l.submission_id = s.submission_id) AS recommendCnt,
-               s.regdate AS regdate
+               s.regdate AS regdate,
+               TO_CHAR(s.sketch) AS sketch,
+               r.title AS title,
+               s.week
         FROM submission s
                  JOIN relay r ON s.relay_id = r.relay_id
         WHERE r.is_end = 0
@@ -56,13 +60,17 @@
         ]]>
     </select>
 
-    <select id="findSubmissionsByMemberIdEnded" parameterType="Integer" resultType="Submission">
+    <select id="findSubmissionsByMemberIdEnded" parameterType="Integer" resultType="MySubmission">
         <![CDATA[
         SELECT s.submission_id AS submissionId,
                s.relay_id AS relayId,
+               s.member_id AS memberId,
                s.is_selected AS isSelected,
                (SELECT COUNT(*) FROM recommend l WHERE l.submission_id = s.submission_id) AS recommendCnt,
-               s.regdate AS regdate
+               s.regdate AS regdate,
+               TO_CHAR(s.sketch) AS sketch,
+               r.title AS title,
+               s.week
         FROM submission s
                  JOIN relay r ON s.relay_id = r.relay_id
         WHERE r.is_end = 1
