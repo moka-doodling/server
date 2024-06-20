@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AdminRelayService {
 
-    void insertRelay(RelayInsertRequestDTO request);
+    Integer insertRelay(RelayInsertRequestDTO request);
     boolean deleteRelay(Integer relayId);
 
     List<RelayListResponseDTO> getRelayList();

@@ -23,7 +23,7 @@ public class AdminRelayServiceImpl implements AdminRelayService {
     private final AdminRelayMapper mapper;
 
     @Override
-    public void insertRelay(RelayInsertRequestDTO request) {
+    public Integer insertRelay(RelayInsertRequestDTO request) {
         Relay relay = Relay.builder()
                 .title(request.getTitle())
                 .cover(request.getCover())
@@ -33,6 +33,7 @@ public class AdminRelayServiceImpl implements AdminRelayService {
                 .build();
         log.info("insert relay -> " + relay);
         mapper.insertRelay(relay);
+        return relay.getRelayId();
     }
 
     @Override
