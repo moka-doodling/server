@@ -8,6 +8,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Builder
+@ToString
 public class Relay {
 
     private Integer relayId;
