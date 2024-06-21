@@ -31,6 +31,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .regdate(submission.getRegdate())
                         .content(submission.getContent())
                         .sketch(submission.getSketch())
+                        .isSelected(submission.getIsSelected())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -46,6 +47,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .regdate(submission.getRegdate())
                         .content(submission.getContent())
                         .sketch(submission.getSketch())
+                        .isSelected(submission.getIsSelected())
                         .build())
                 .collect(Collectors.toList());
     }

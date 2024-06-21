@@ -6,5 +6,6 @@ public interface AdminSubmissionMapper {
 
     Integer selectMember(Integer submissionId);
     int selectSubmission(Integer submissionId);
+    int cancelSubmission(Integer submissionId);
 
 }

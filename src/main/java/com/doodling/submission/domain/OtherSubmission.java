@@ -19,5 +19,6 @@ public class OtherSubmission {
     private Date regdate;
     private String content;
     private String sketch;
+    private Boolean isSelected;
 
 }
