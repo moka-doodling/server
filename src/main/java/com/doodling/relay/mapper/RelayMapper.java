@@ -1,7 +1,7 @@
 package com.doodling.relay.mapper;
 
+import com.doodling.global.dto.Criteria;
 import com.doodling.relay.domain.Book;
-import com.doodling.relay.domain.Criteria;
 import com.doodling.relay.domain.Relay;
 
 import org.apache.ibatis.annotations.Param;

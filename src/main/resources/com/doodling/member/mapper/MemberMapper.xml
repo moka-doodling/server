@@ -41,7 +41,7 @@
         ]]>
     </insert>
 
-    <select id="findSubmissionsByMemberIdOngoing" parameterType="Integer" resultType="MySubmission">
+    <select id="findSubmissionsByMemberId" resultType="MySubmission">
         <![CDATA[
         SELECT s.submission_id AS submissionId,
                s.relay_id AS relayId,
@@ -54,28 +54,41 @@
                s.week
         FROM submission s
                  JOIN relay r ON s.relay_id = r.relay_id
-        WHERE r.is_end = 0
+        WHERE r.is_end = ${filtering}
           AND s.member_id = #{memberId}
         ORDER BY s.regdate DESC
         ]]>
     </select>
 
-    <select id="findSubmissionsByMemberIdEnded" parameterType="Integer" resultType="MySubmission">
+    <select id="findSubmissionsByMemberIdPaging" parameterType="Integer" resultType="MySubmission">
         <![CDATA[
-        SELECT s.submission_id AS submissionId,
-               s.relay_id AS relayId,
-               s.member_id AS memberId,
-               s.is_selected AS isSelected,
-               (SELECT COUNT(*) FROM recommend l WHERE l.submission_id = s.submission_id) AS recommendCnt,
-               s.regdate AS regdate,
-               TO_CHAR(s.sketch) AS sketch,
-               r.title AS title,
-               s.week
-        FROM submission s
-                 JOIN relay r ON s.relay_id = r.relay_id
-        WHERE r.is_end = 1
-          AND s.member_id = #{memberId}
-        ORDER BY s.regdate DESC
+        SELECT s1.submissionId,
+               s1.relayId,
+               s1.memberId,
+               s1.isSelected,
+               s1.recommendCnt,
+               s1.regdate,
+               s1.sketch,
+               s1.title,
+               s1.week
+        FROM (
+                 SELECT s.submission_id AS submissionId,
+                        s.relay_id AS relayId,
+                        s.member_id AS memberId,
+                        s.is_selected AS isSelected,
+                        (SELECT COUNT(*) FROM recommend l WHERE l.submission_id = s.submission_id) AS recommendCnt,
+                        s.regdate AS regdate,
+                        TO_CHAR(s.sketch) AS sketch,
+                        r.title AS title,
+                        s.week,
+                        ROW_NUMBER() OVER (ORDER BY s.regdate DESC) AS row_num
+                 FROM submission s
+                          JOIN relay r ON s.relay_id = r.relay_id
+                 WHERE r.is_end = #{filtering}
+                   AND s.member_id = #{memberId}
+             ) s1
+        WHERE s1.row_num > ((#{cri.pageNum} - 1) * #{cri.pageSize})
+          AND s1.row_num <= (#{cri.pageNum} * #{cri.pageSize})
         ]]>
     </select>
 
@@ -108,6 +121,15 @@
             SELECT COUNT(username)
             FROM member
             WHERE username = #{username}
+        ]]>
+    </select>
+
+    <select id="countTotalMySubmission" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM submission s
+                 JOIN relay r ON s.relay_id = r.relay_id
+        WHERE r.is_end = ${filtering} AND s.member_id = #{memberId}
         ]]>
     </select>
 </mapper>

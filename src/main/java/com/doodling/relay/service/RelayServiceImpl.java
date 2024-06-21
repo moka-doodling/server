@@ -1,7 +1,7 @@
 package com.doodling.relay.service;
 
+import com.doodling.global.dto.Criteria;
 import com.doodling.relay.domain.Book;
-import com.doodling.relay.domain.Criteria;
 import com.doodling.relay.domain.Relay;
 import com.doodling.relay.dto.BookPageDTO;
 import com.doodling.relay.dto.RelayDetailResponseDTO;

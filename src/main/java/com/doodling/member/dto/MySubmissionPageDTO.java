@@ -1,4 +1,4 @@
-package com.doodling.relay.dto;
+package com.doodling.member.dto;
 
 import com.doodling.global.dto.Criteria;
 import lombok.*;
@@ -9,18 +9,18 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @ToString
-public class BookPageDTO {
+public class MySubmissionPageDTO {
   private boolean prev, next;
 
   private Integer total;
   private Criteria cri;
-  private List<RelayResponseDTO> books;
+  private List<MySubmissionResponseDTO> mySubmissions;
 
   @Builder
-  public BookPageDTO(Integer total, Criteria cri, List<RelayResponseDTO> books) {
+  public MySubmissionPageDTO(Integer total, Criteria cri, List<MySubmissionResponseDTO> mySubmissions) {
     this.cri = cri;
     this.total = total;
-    this.books = books;
+    this.mySubmissions = mySubmissions;
 
     int pageSize = cri.getPageSize();
     int pageNum = cri.getPageNum();
