@@ -10,5 +10,5 @@ public interface RelayService {
     List<RelayResponseDTO> getAllBookRelays();
     List<RelayResponseDTO> getAllRelays(String filtering);
     RelayDetailResponseDTO getBookRelayDetail(Integer relayId);
-    BookPageDTO getBooksPaging(Integer offset);
+    BookPageDTO getBooksPaging(Integer offset, Integer age);
 }

@@ -3,7 +3,6 @@ package com.doodling.member.controller;
 import com.doodling.member.dto.*;
 
 import com.doodling.member.service.AuthService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

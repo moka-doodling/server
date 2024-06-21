@@ -19,4 +19,6 @@ public interface RelayMapper {
     List<Relay> selectBookPaging(Criteria criteria);
 
     Integer countTotalBooks();
+
+    Integer countTotalBooksFilteringAge(Integer age);
 }

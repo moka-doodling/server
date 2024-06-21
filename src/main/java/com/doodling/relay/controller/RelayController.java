@@ -37,9 +37,8 @@ public class RelayController {
     }
 
     @GetMapping("/book")
-    public ResponseEntity<BookPageDTO> getAllBooksPaging(@RequestParam("offset") Integer offset) {
-        BookPageDTO result = relayService.getBooksPaging(offset);
-        log.info(result + "");
+    public ResponseEntity<BookPageDTO> getAllBooksPaging(@RequestParam("offset") Integer offset, @RequestParam("age") Integer age) {
+        BookPageDTO result = relayService.getBooksPaging(offset, age);
         return ResponseEntity.ok(result);
     }
 }
