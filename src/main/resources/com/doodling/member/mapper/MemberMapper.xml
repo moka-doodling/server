@@ -103,6 +103,14 @@
         ]]>
     </update>
 
+    <update id="cancelSelectedCnt" parameterType="java.lang.Integer">
+        <![CDATA[
+            update member
+            set selected_cnt = selected_cnt - 1
+            where member_id = #{memberId}
+        ]]>
+    </update>
+
     <select id="countMembersByUsername" parameterType="String" resultType="Integer">
         <![CDATA[
             SELECT COUNT(username)

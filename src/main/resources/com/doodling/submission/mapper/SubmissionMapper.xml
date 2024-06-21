@@ -11,7 +11,8 @@
             s.recommend_cnt recommendCnt,
             s.regdate,
             s.content,
-            TO_CHAR(s.sketch) sketch
+            TO_CHAR(s.sketch) sketch,
+            s.is_selected
         from submission s
                  join member m on s.member_id = m.member_id
         where s.deletedate is null
@@ -29,7 +30,8 @@
             s.recommend_cnt recommendCnt,
             s.regdate,
             s.content,
-            TO_CHAR(s.sketch) sketch
+            TO_CHAR(s.sketch) sketch,
+            s.is_selected
         from submission s
                  join member m on s.member_id = m.member_id
         where s.deletedate is null
