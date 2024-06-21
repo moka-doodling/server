@@ -78,10 +78,11 @@ public class RelayServiceImpl implements RelayService {
   }
 
   @Override
-  public BookPageDTO getBooksPaging(Integer offset) {
+  public BookPageDTO getBooksPaging(Integer offset, Integer age) {
     Criteria criteria = Criteria.builder()
             .pageNum(offset)
-            .pageSize(4)
+            .pageSize(2)
+            .type(age.toString())
             .build();
     List<RelayResponseDTO> books = relayMapper.selectBookPaging(criteria).stream()
             .map(relay -> RelayResponseDTO.builder()
@@ -92,7 +93,7 @@ public class RelayServiceImpl implements RelayService {
                     .build())
             .collect(Collectors.toList());
 
-    int total = relayMapper.countTotalBooks();
+    int total = relayMapper.countTotalBooksFilteringAge(age);
     return BookPageDTO.builder()
             .total(total)
             .books(books)
