@@ -31,4 +31,17 @@ public class AdminSubmissionController {
         }
 
     }
+
+    @PatchMapping("/unsubmission/{submissionId}")
+    public ResponseEntity<String> selectCancelSubmission(@PathVariable Integer submissionId) {
+        boolean result = service.cancelSubmission(submissionId);
+
+        if (result) {
+            return ResponseEntity.ok("success to cancel submission");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to cancel submission");
+        }
+
+    }
 }

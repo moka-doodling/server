@@ -18,6 +18,7 @@ public interface MemberMapper {
 	int changePassword(Member member);
 	List<MySubmission> findSubmissionsByMemberId(@Param("memberId") Integer memberId, @Param("filtering") Integer filtering);
 	int updateSelectedCnt(Integer memberId);
+	int cancelSelectedCnt(Integer memberId);
 	int countMembersByUsername(String username);
 	List<MySubmission> findSubmissionsByMemberIdPaging(@Param("cri") Criteria cri, @Param("memberId") Integer memberId, @Param("filtering") Integer filtering);
 	int countTotalMySubmission(@Param("memberId") Integer memberId, @Param("filtering") Integer filtering);

@@ -20,7 +20,7 @@ public class SubmissionController {
     private final SubmissionService service;
 
     @GetMapping("/list")
-    public ResponseEntity<List<SubmissionOtherListResponseDTO>> getRecommendList(@RequestParam Integer relayId, @RequestParam Integer week, @RequestParam String sort) {
+    public ResponseEntity<List<SubmissionOtherListResponseDTO>> getSubmissionList(@RequestParam Integer relayId, @RequestParam Integer week, @RequestParam String sort) {
         List<SubmissionOtherListResponseDTO> response;
         if (sort.equals("recommend")) {
             response = service.selectSubmissionByRecommendCount(relayId, week);

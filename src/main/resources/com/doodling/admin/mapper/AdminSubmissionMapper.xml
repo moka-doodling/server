@@ -21,8 +21,24 @@
                   where m.MEMBER_ID = s.MEMBER_ID
                     and m.DELETEDATE is null
               )
-              and to_char(sysdate, 'D') = 4 -- 일요일=0, 오늘은 4
+              and to_char(sysdate, 'D') = 6 -- 일요일=0, 오늘은 6
         ]]>
+	</update>
+
+    <update id="cancelSubmission" parameterType="java.lang.Integer">
+        <![CDATA[
+            update SUBMISSION s
+            set s.IS_SELECTED = 0
+            where s.SUBMISSION_ID = #{submissionId}
+              and s.DELETEDATE is null
+              and exists(
+                select 1
+                from MEMBER m
+                where m.MEMBER_ID = s.MEMBER_ID
+                  and m.DELETEDATE is null
+            )
+              and to_char(sysdate, 'D') = 6 -- 일요일=0, 오늘은 6
+            ]]>
 	</update>
 
 </mapper>

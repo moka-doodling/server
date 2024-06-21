@@ -33,4 +33,16 @@ public class AdminSubmissionServiceImpl implements AdminSubmissionService {
 
         return true;
     }
+
+    @Override
+    public boolean cancelSubmission(Integer submissionId) {
+        int result1 = adminSubmissionMapper.cancelSubmission(submissionId); //0이면 fail, 1이면 success
+        int result2 = memberMapper.cancelSelectedCnt(adminSubmissionMapper.selectMember(submissionId));
+
+        System.out.println("result1 : " + result1);
+        System.out.println("result2 : " + result2);
+        if (result1 == 0 || result2 == 0) throw new CustomException(ErrorCode.FAIL_TO_UPDATE);
+
+        return true;
+    }
 }
