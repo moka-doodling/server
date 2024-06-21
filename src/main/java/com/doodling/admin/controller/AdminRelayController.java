@@ -19,10 +19,10 @@ public class AdminRelayController {
     private final AdminRelayService service;
 
     @PostMapping("/relay")
-    public ResponseEntity<String> insert(@RequestBody RelayInsertRequestDTO request) throws Exception {
+    public ResponseEntity<Integer> insert(@RequestBody RelayInsertRequestDTO request) throws Exception {
         log.info("relay 등록: " + request.toString());
-        service.insertRelay(request);
-        return ResponseEntity.ok("success to insert relay");
+        Integer relayId = service.insertRelay(request);
+        return ResponseEntity.ok(relayId);
     }
 
     @PatchMapping("/relay/{relayId}")
