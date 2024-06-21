@@ -1,6 +1,7 @@
 package com.doodling.member.service;
 
 import com.doodling.exception.CustomException;
+import com.doodling.global.dto.Criteria;
 import com.doodling.member.domain.Member;
 import com.doodling.member.domain.MySubmission;
 import com.doodling.member.domain.RefreshToken;
@@ -9,7 +10,6 @@ import com.doodling.member.dto.*;
 import com.doodling.member.mapper.MemberMapper;
 import com.doodling.member.mapper.RefreshTokenMapper;
 import com.doodling.security.jwt.JwtTokenProvider;
-import com.doodling.submission.domain.Submission;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -138,7 +138,7 @@ public class MemberServiceImpl implements MemberService {
   @Override
   @Transactional
   public List<MySubmissionResponseDTO> getAllMySubmissions(Integer memberId, String filtering) {
-    List<MySubmission> result = filtering.equals("ongoing") ? memberMapper.findSubmissionsByMemberIdOngoing(memberId) : memberMapper.findSubmissionsByMemberIdEnded(memberId);
+    List<MySubmission> result = memberMapper.findSubmissionsByMemberId(memberId, filtering.equals("ongoing") ? 0 : 1);
     log.info("MemberService Result: " + result);
     return result.stream().map(s ->
                     MySubmissionResponseDTO.builder()
@@ -176,5 +176,32 @@ public class MemberServiceImpl implements MemberService {
     }
     member.changePassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
     if (memberMapper.changePassword(member) == 0) throw new CustomException(DATABASE_ERROR);
+  }
+
+  @Override
+  public MySubmissionPageDTO getAllMySubmissionsPaging(Integer memberId, String filtering, Integer offset) {
+    Criteria criteria = Criteria.builder()
+            .pageNum(offset)
+            .pageSize(3)
+            .build();
+    List<MySubmissionResponseDTO> mySubmissions = memberMapper.findSubmissionsByMemberIdPaging(criteria, memberId, filtering.equals("ongoing") ? 0 : 1).stream().map(s ->
+                    MySubmissionResponseDTO.builder()
+                            .recommendCnt(s.getRecommendCnt())
+                            .submissionId(s.getSubmissionId())
+                            .isSelected(s.getIsSelected())
+                            .relayId(s.getRelayId())
+                            .sketch(s.getSketch())
+                            .title(s.getTitle())
+                            .regdate(s.getRegdate())
+                            .build())
+            .collect(Collectors.toList());
+    log.info("MemberService Result: " + mySubmissions);
+
+    int total = memberMapper.countTotalMySubmission(memberId, filtering.equals("ongoing") ? 0 : 1);
+    return MySubmissionPageDTO.builder()
+            .total(total)
+            .mySubmissions(mySubmissions)
+            .cri(criteria)
+            .build();
   }
 }

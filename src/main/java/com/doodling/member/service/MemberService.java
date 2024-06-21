@@ -12,5 +12,5 @@ public interface MemberService {
   MyInfoResponseDTO getMyInfo(Integer memberId);
   List<MySubmissionResponseDTO> getAllMySubmissions(Integer memberId, String filtering);
   void changePassword(Integer memberId, ChangePasswordDTO changePasswordDTO);
-
+  MySubmissionPageDTO getAllMySubmissionsPaging(Integer memberId, String filtering, Integer offset);
 }
