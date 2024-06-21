@@ -42,6 +42,8 @@ public class MemberServiceImpl implements MemberService {
   @Transactional
   public Integer register(SignupRequestDTO signupRequestDTO) {
 
+    if (0 < memberMapper.countMembersByUsername(signupRequestDTO.getUsername())) throw new CustomException(USERNAME_ALREADY_EXISTS);
+
     if (!signupRequestDTO.getPassword().equals(signupRequestDTO.getPasswordValidation()))
       throw new CustomException(PASSWORD_NOT_MATCH);
 

@@ -21,6 +21,9 @@ public enum ErrorCode {
   PASSWORD_VALIDATION_FAILED(UNAUTHORIZED, "비밀번호 확인에 실패했습니다."),
   INVALID_MEMBER_ID(UNAUTHORIZED, "member Id가 올바르지 않습니다."),
 
+  /* code: 409 */
+  USERNAME_ALREADY_EXISTS(CONFLICT, "이미 존재하는 유저 아이디입니다."),
+
   /* code: 500 */
   DATABASE_ERROR(INTERNAL_SERVER_ERROR, "데이터베이스 오류가 발생했습니다."),
   FAIL_TO_UPDATE(UNAUTHORIZED, "수정에 실패했습니다."),
