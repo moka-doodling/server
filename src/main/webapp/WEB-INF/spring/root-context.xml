@@ -42,7 +42,8 @@
 				  com.doodling.admin.domain,
 				  com.doodling.submission.domain,
 				  com.doodling.recommend.domain,
-				  com.doodling.relay.domain">
+				  com.doodling.relay.domain,
+				  com.doodling.global.dto">
 
 		</property>
 	</bean>
