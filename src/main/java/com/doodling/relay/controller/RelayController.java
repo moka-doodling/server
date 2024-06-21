@@ -1,5 +1,6 @@
 package com.doodling.relay.controller;
 
+import com.doodling.relay.dto.BookPageDTO;
 import com.doodling.relay.dto.RelayDetailResponseDTO;
 import com.doodling.relay.service.RelayService;
 import com.doodling.relay.dto.RelayResponseDTO;
@@ -35,4 +36,10 @@ public class RelayController {
         return ResponseEntity.ok(relayDetailResponseDTO);
     }
 
+    @GetMapping("/book")
+    public ResponseEntity<BookPageDTO> getAllBooksPaging(@RequestParam("offset") Integer offset) {
+        BookPageDTO result = relayService.getBooksPaging(offset);
+        log.info(result + "");
+        return ResponseEntity.ok(result);
+    }
 }

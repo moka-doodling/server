@@ -47,4 +47,28 @@
         ]]>
     </select>
 
+    <select id="selectBookPaging" resultType="Relay" parameterType="Criteria">
+        <![CDATA[
+        SELECT r1.relayId,
+               r1.title,
+               TO_CHAR(r1.cover) AS cover,
+               r1.age
+        FROM (
+                 SELECT r2.relay_id AS relayId,
+                        r2.title AS title,
+                        r2.cover AS cover,
+                        r2.age AS age,
+                        ROW_NUMBER() OVER (ORDER BY r2.startdate DESC) AS row_num
+                 FROM relay r2
+                 WHERE r2.is_end = 1
+             ) r1
+        WHERE r1.row_num > ((#{pageNum} - 1) * #{pageSize}) AND r1.row_num <= (#{pageNum} * #{pageSize})
+        ]]>
+    </select>
+
+    <select id="countTotalBooks" resultType="Integer">
+        SELECT COUNT(*)
+        FROM relay
+        WHERE is_end = 1
+    </select>
 </mapper>
