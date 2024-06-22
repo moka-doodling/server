@@ -22,6 +22,7 @@ public class AdminRelayController {
     public ResponseEntity<Integer> insert(@RequestBody RelayInsertRequestDTO request) throws Exception {
         log.info("relay 등록: " + request.toString());
         Integer relayId = service.insertRelay(request);
+        System.out.println(relayId);
         return ResponseEntity.ok(relayId);
     }
 

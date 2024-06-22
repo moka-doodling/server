@@ -31,8 +31,8 @@ public class AdminRelayServiceImpl implements AdminRelayService {
                 .startdate(request.getStartdate())
                 .enddate(request.getEnddate())
                 .build();
-        log.info("insert relay -> " + relay);
         mapper.insertRelay(relay);
+        log.info("insert relay -> " + relay);
         return relay.getRelayId();
     }
 
