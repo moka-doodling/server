@@ -81,7 +81,7 @@ public class RelayServiceImpl implements RelayService {
   public BookPageDTO getBooksPaging(Integer offset, Integer age) {
     Criteria criteria = Criteria.builder()
             .pageNum(offset)
-            .pageSize(2)
+            .pageSize(4)
             .type(age.toString())
             .build();
     List<RelayResponseDTO> books = relayMapper.selectBookPaging(criteria).stream()

@@ -170,7 +170,7 @@ public class MemberServiceImpl implements MemberService {
       throw new CustomException(PASSWORD_NOT_MATCH);
     }
 
-    if (!changePasswordDTO.getNewPassword().equals(changePasswordDTO.getPassword_validation())) {
+    if (!changePasswordDTO.getNewPassword().equals(changePasswordDTO.getPasswordValidation())) {
       log.error("비밀번호 확인에 실패했습니다.");
       throw new CustomException(PASSWORD_VALIDATION_FAILED);
     }
