@@ -21,7 +21,7 @@
                   where m.MEMBER_ID = s.MEMBER_ID
                     and m.DELETEDATE is null
               )
-              and to_char(sysdate, 'D') = 6 -- 일요일=0, 오늘은 6
+              --and to_char(sysdate, 'D') = 6 -- 일요일=0, 오늘은 6--
         ]]>
 	</update>
 
