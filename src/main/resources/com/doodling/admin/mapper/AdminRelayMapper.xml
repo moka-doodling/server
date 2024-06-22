@@ -32,7 +32,7 @@
                 enddate,
                 title,
                 age,
-                TO_CHAR(cover),
+                TO_CHAR(cover) as cover,
                 is_end as isEnd
             FROM relay
             ORDER BY startdate DESC
