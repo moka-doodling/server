@@ -35,7 +35,7 @@
                 TO_CHAR(cover) as cover,
                 is_end as isEnd
             FROM relay
-            ORDER BY startdate DESC
+            ORDER BY startdate DESC, relay_id DESC
         ]]>
     </select>
 </mapper>
