@@ -54,7 +54,7 @@ public class MemberServiceImpl implements MemberService {
   /**
    * 회원 가입
    * @param request
-   * @return
+   * @return Integer 멤버 고유번호
    */
   @Override
   @Transactional
@@ -152,6 +152,7 @@ public class MemberServiceImpl implements MemberService {
   /**
    * 회원 정보 조회
    * @param memberId
+   * @return MyInfoResponseDTO
    */
   @Override
   public MyInfoResponseDTO getMyInfo(Integer memberId) {
@@ -170,6 +171,7 @@ public class MemberServiceImpl implements MemberService {
    * 내 제출물 전체 조회
    * @param memberId
    * @param filtering
+   * @return List<MySubmissionResponseDTO> 내 제출물 목록
    */
   @Override
   @Transactional
@@ -220,10 +222,11 @@ public class MemberServiceImpl implements MemberService {
   }
 
   /**
-   * 내 제출물 전체 조회
+   * 내 제출물 전체 조회 (페이징)
    * @param memberId
    * @param filtering
    * @param offset
+   * @return List<MySubmissionResponseDTO> 내 제출물 목록 (페이징)
    */
   @Override
   public MySubmissionPageDTO getAllMySubmissionsPaging(Integer memberId, String filtering, Integer offset) {
