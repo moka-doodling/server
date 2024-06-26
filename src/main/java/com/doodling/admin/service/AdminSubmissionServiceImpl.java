@@ -13,6 +13,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Admin 당선작 선정 도메인
+ *
+ * @author 김지현
+ * @since 2024.06.21
+ * @version 1.0
+ *
+ * <pre>
+ * 수정일          수정자         내용
+ * ------------- ----------- ---------------------------------
+ * 2024.06.21    김지현       최초 생성
+ * </pre>
+ */
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -21,6 +34,11 @@ public class AdminSubmissionServiceImpl implements AdminSubmissionService {
     private final AdminSubmissionMapper adminSubmissionMapper;
     private final MemberMapper memberMapper;
 
+    /**
+     * 당선작 선정
+     * @param submissionId
+     * @return 선정 성공 여부
+     */
     @Override
     public boolean selectSubmission(Integer submissionId) {
         log.info("selected submission -> " + submissionId);
@@ -34,6 +52,11 @@ public class AdminSubmissionServiceImpl implements AdminSubmissionService {
         return true;
     }
 
+    /**
+     * 당선작 선정 취소
+     * @param submissionId
+     * @return 선정 취소 성공 여부
+     */
     @Override
     public boolean cancelSubmission(Integer submissionId) {
         int result1 = adminSubmissionMapper.cancelSubmission(submissionId); //0이면 fail, 1이면 success
