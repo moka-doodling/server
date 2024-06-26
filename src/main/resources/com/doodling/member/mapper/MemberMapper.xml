@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    파일명 : MemberMapper.xml
+    설  명 : 사용자
 
+    == 개정이력 ========================================
+     수정일       수정자    수정내용
+    ========== ======= ================================
+    2024.06.17 김지수   최초 생성
+-->
 <mapper namespace="com.doodling.member.mapper.MemberMapper">
 
     <select id="findByUsername" resultType="Member"
@@ -41,6 +49,7 @@
         ]]>
     </insert>
 
+    <!-- member Id와 filtering 조건으로 삭제되지 않은 내 모든 제출물 조회 -->
     <select id="findSubmissionsByMemberId" resultType="MySubmission">
         <![CDATA[
         SELECT s.submission_id AS submissionId,
@@ -61,6 +70,7 @@
         ]]>
     </select>
 
+    <!-- member Id와 filtering 조건으로 삭제되지 않은 내 제출물 페이징 처리해 조회 -->
     <select id="findSubmissionsByMemberIdPaging" parameterType="Integer" resultType="MySubmission">
         <![CDATA[
         SELECT s1.submissionId,
@@ -94,6 +104,7 @@
         ]]>
     </select>
 
+    <!-- member Id로 삭제 -->
     <update id="deleteUserByMemberId" parameterType="Integer">
         <![CDATA[
         UPDATE member
@@ -134,6 +145,7 @@
         ]]>
     </select>
 
+    <!-- 진행 중인 공모전 중 내가 제출한, filtering 조건에 맞는 제출물 개수 조회 -->
     <select id="countTotalMySubmission" resultType="Integer">
         <![CDATA[
         SELECT COUNT(*)

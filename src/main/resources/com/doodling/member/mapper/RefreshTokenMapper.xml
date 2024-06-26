@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--
+    파일명 : RefreshTokenMapper.xml
+    설  명 : refresh token
+
+    == 개정이력 ========================================
+     수정일       수정자    수정내용
+    ========== ======= ================================
+    2024.06.19 김지수   최초 생성
+-->
 <mapper namespace="com.doodling.member.mapper.RefreshTokenMapper">
 
     <insert id="insertRefreshToken" parameterType="RefreshToken">
@@ -16,6 +25,7 @@
         ]]>
     </insert>
 
+    <!-- 회원탈퇴 등으로 인해 생긴 더 이상 유효하지 않은 refresh token -->
     <insert id="insertExpiredRefreshToken" parameterType="RefreshToken">
         <selectKey keyProperty="tokenId" resultType="Integer" order="AFTER">
             <![CDATA[
@@ -43,6 +53,7 @@
         ]]>
     </delete>
 
+    <!-- 특정 유저의 블랙리스트에 오른 refresh token 목록 -->
     <select id="countMemberExpiredRefreshToken" parameterType="RefreshToken" resultType="Integer">
         <![CDATA[
         SELECT COUNT(*)
