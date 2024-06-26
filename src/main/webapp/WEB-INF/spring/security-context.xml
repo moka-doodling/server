@@ -51,11 +51,15 @@
         <security:intercept-url pattern="/admin/**"
                                 access="hasRole('ROLE_ADMIN')" />
 
-        <!-- login, sign-up 외에는 모두 권한 필요 -->
-        <!--<security:intercept-url pattern="/**" access="authenticated" />-->
+        <!-- 완성된 책 목록 -->
+        <security:intercept-url pattern="/relay/book/all" access="permitAll" />
+        <!-- 진행 중인 공모전 -->
+        <security:intercept-url pattern="/relay/all" access="permitAll" />
+        <!-- 완성된 책 목록(페이징) -->
+        <security:intercept-url pattern="/relay/book" access="permitAll" />
 
-        <security:intercept-url pattern="/**"
-                                access="permitAll" />
+        <!-- 기타 모든 요청은 인증된 사용자만 접근 가능 -->
+        <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 
         <!-- 로그아웃 설정 -->
         <security:logout logout-url="/member/logout"
