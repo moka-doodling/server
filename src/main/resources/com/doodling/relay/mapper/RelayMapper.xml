@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    파일명 : RelayMapper.xml
+    설  명 : 릴레이
+    == 개정이력 ========================================
+     수정일      수정자   수정내용
+    ========== ======= ================================
+    2024.06.18 이주현   최초 생성
+-->
 
 <mapper namespace="com.doodling.relay.mapper.RelayMapper">
+    <!-- 완성된 책(종료된 공모전) 리스트 조회 -->
     <select id="selectAllBookRelays" resultType="Relay">
         <![CDATA[
         SELECT r.relay_id relayId,
@@ -17,6 +26,7 @@
         ]]>
     </select>
 
+    <!-- 진행중인 릴레이 리스트 조회 -->
     <select id="selectAllOngoingRelays" resultType="Relay" parameterType="Integer">
         <![CDATA[
         SELECT r.relay_id relayId,
@@ -29,6 +39,7 @@
         ]]>
     </select>
 
+    <!-- 완성된 책(종료된 공모전) 상세 조회 -->
     <select id="selectBookDetailsByRelayId" resultType="Book" parameterType="Integer">
         <![CDATA[
         SELECT r.relay_id relayId,
@@ -47,6 +58,7 @@
         ]]>
     </select>
 
+    <!-- 완성된 책(종료된 공모전) 페이징 -->
     <select id="selectBookPaging" resultType="Relay" parameterType="Criteria">
         <![CDATA[
         SELECT relay_id AS relayId,
@@ -60,12 +72,14 @@
         ]]>
     </select>
 
+    <!-- 완성된 책(종료된 공모전) 개수 -->
     <select id="countTotalBooks" resultType="Integer">
         SELECT COUNT(*)
         FROM relay
         WHERE is_end = 1
     </select>
 
+    <!-- 완성된 책(종료된 공모전) 연령대 별 개수 -->
     <select id="countTotalBooksFilteringAge" resultType="Integer" parameterType="Integer">
         SELECT COUNT(*)
         FROM relay

@@ -17,6 +17,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * 릴레이(공모전) 로직 구현
+ *
+ * @author 이주현
+ * @since 2024.06.18
+ * @version 1.0
+ *
+ * <pre>
+ * 수정일       수정자    수정내용
+ * ---------- -------- ---------------------
+ * 2024.06.18 이주현    최초 생성
+ * 2024.06.21 김지수    페이징 처리 추가
+ * </pre>
+ */
+
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -24,6 +39,10 @@ public class RelayServiceImpl implements RelayService {
 
   private final RelayMapper relayMapper;
 
+  /**
+   * 완성된 책(종료된 공모전) 리스트 조회
+   * @return List<RelayResponseDTO>
+   */
   @Transactional
   @Override
   public List<RelayResponseDTO> getAllBookRelays() {
@@ -32,6 +51,11 @@ public class RelayServiceImpl implements RelayService {
     return result.stream().map(relay -> RelayResponseDTO.builder().relayId(relay.getRelayId()).title(relay.getTitle()).cover(relay.getCover()).age(relay.getAge()).build()).collect(Collectors.toList());
   }
 
+  /**
+   * 릴레이 전체 목록 조회
+   * @param filtering
+   * @return List<RelayResponseDTO>
+   */
   @Override
   @Transactional
   public List<RelayResponseDTO> getAllRelays(String filtering) {
@@ -56,6 +80,11 @@ public class RelayServiceImpl implements RelayService {
             .collect(Collectors.toList());
   }
 
+  /**
+   * 완성된 책(종료된 공모전) 상세 조회
+   * @param relayId
+   * @return RelayDetailResponseDTO
+   */
   @Transactional
   @Override
   public RelayDetailResponseDTO getBookRelayDetail(Integer relayId) {
@@ -77,6 +106,12 @@ public class RelayServiceImpl implements RelayService {
             .build();
   }
 
+  /**
+   * 완성된 책(종료된 공모전) 페이징
+   * @param offset
+   * @param age
+   * @return BookPageDTO
+   */
   @Override
   public BookPageDTO getBooksPaging(Integer offset, Integer age) {
     Criteria criteria = Criteria.builder()
