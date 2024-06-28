@@ -13,6 +13,19 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
+/**
+ * 예외 핸들러 클래스
+ *
+ * @author 김지수
+ * @since 2024.6.18
+ * @version 1.0
+ *
+ * <pre>
+ * 수정일        수정자        수정내용
+ * ----------  --------    ---------------------------
+ * 2024.6.18  김지수         최초 생성
+ * </pre>
+ */
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -23,7 +36,7 @@ public class GlobalExceptionHandler {
     return ErrorResponse.toResponseEntity(e.getErrorCode());
   }
 
-  /* TODO: JwtException 에 관한 예외 ENUM 생성 */
+  // JWT 관련 예외 처리
   @ExceptionHandler(ExpiredJwtException.class)
   public ResponseEntity<ErrorResponse> handleExpiredJwtException(ExpiredJwtException e) {
     log.error("ExpiredJwtException occurred: {}", e.getMessage());

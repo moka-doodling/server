@@ -25,6 +25,19 @@ import java.util.stream.Collectors;
 
 import static com.doodling.exception.ErrorCode.*;
 
+/**
+ * 회원 정보 도메인
+ *
+ * @author 김지수
+ * @since 2024.6.17
+ * @version 1.0
+ *
+ * <pre>
+ * 수정일        수정자        수정내용
+ * ----------  --------    ---------------------------
+ * 2024.6.17  김지수         최초 생성
+ * </pre>
+ */
 @RequiredArgsConstructor
 @Service
 @Slf4j
@@ -38,6 +51,11 @@ public class MemberServiceImpl implements MemberService {
 
   private final static String PREFIX = "Bearer ";
 
+  /**
+   * 회원 가입
+   * @param request
+   * @return Integer 멤버 고유번호
+   */
   @Override
   @Transactional
   public Integer register(SignupRequestDTO signupRequestDTO) {
@@ -57,7 +75,11 @@ public class MemberServiceImpl implements MemberService {
     return member.getMemberId();
   }
 
-  // refresh token 기반으로 access token 새롭게 생성
+  /**
+   * refresh token 기반으로 access token 새롭게 생성
+   * @param request
+   * @return access token
+   */
   @Override
   @Transactional
   public TokenDTO reissueToken(ReissueTokenDTO reissueTokenDto) {
@@ -97,6 +119,11 @@ public class MemberServiceImpl implements MemberService {
             .build();
   }
 
+  /**
+   * 회원 탈퇴
+   * @param memberId
+   * @param refreshToken
+   */
   @Override
   @Transactional
   public void deleteUser(Integer memberId, String refreshToken) {
@@ -122,6 +149,11 @@ public class MemberServiceImpl implements MemberService {
     );
   }
 
+  /**
+   * 회원 정보 조회
+   * @param memberId
+   * @return MyInfoResponseDTO
+   */
   @Override
   public MyInfoResponseDTO getMyInfo(Integer memberId) {
     Optional<Member> optional_member = memberMapper.findByMemberId(memberId);
@@ -135,6 +167,12 @@ public class MemberServiceImpl implements MemberService {
             .build();
   }
 
+  /**
+   * 내 제출물 전체 조회
+   * @param memberId
+   * @param filtering
+   * @return List<MySubmissionResponseDTO> 내 제출물 목록
+   */
   @Override
   @Transactional
   public List<MySubmissionResponseDTO> getAllMySubmissions(Integer memberId, String filtering) {
@@ -153,6 +191,11 @@ public class MemberServiceImpl implements MemberService {
             .collect(Collectors.toList());
   }
 
+  /**
+   * 비밀번호 변경
+   * @param memberId
+   * @param changePasswordDTO
+   */
   @Override
   @Transactional
   public void changePassword(Integer memberId, ChangePasswordDTO changePasswordDTO) {
@@ -178,8 +221,16 @@ public class MemberServiceImpl implements MemberService {
     if (memberMapper.changePassword(member) == 0) throw new CustomException(DATABASE_ERROR);
   }
 
+  /**
+   * 내 제출물 전체 조회 (페이징)
+   * @param memberId
+   * @param filtering
+   * @param offset
+   * @return List<MySubmissionResponseDTO> 내 제출물 목록 (페이징)
+   */
   @Override
   public MySubmissionPageDTO getAllMySubmissionsPaging(Integer memberId, String filtering, Integer offset) {
+    // 3개씩 나누어 조회
     Criteria criteria = Criteria.builder()
             .pageNum(offset)
             .pageSize(3)

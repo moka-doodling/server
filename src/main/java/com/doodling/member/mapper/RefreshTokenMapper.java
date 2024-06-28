@@ -4,9 +4,8 @@ import com.doodling.member.domain.RefreshToken;
 
 public interface RefreshTokenMapper {
 
-  void insertRefreshToken(RefreshToken refreshToken);
+  // refresh token 삽입
   void insertExpiredRefreshToken(RefreshToken refreshToken);
-  int delete(RefreshToken refreshToken);
-  int deleteByMemberId(Integer memberId);
+  // 만약 멤버가 유효하지 않은 refresh token를 가지고 있는지 조회
   int countMemberExpiredRefreshToken(RefreshToken refreshToken);
 }

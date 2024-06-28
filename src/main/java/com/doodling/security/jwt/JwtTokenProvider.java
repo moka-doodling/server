@@ -22,6 +22,19 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * JWT 생성
+ *
+ * @author 김지수
+ * @since 2024.6.17
+ * @version 1.0
+ *
+ * <pre>
+ * 수정일        수정자        수정내용
+ * ----------  --------    ---------------------------
+ * 2024.6.17  김지수         최초 생성
+ * </pre>
+ */
 @RequiredArgsConstructor
 @Component
 @Slf4j
@@ -75,6 +88,11 @@ public class JwtTokenProvider implements InitializingBean {
             .compact();
   }
 
+  /**
+   * principal details service (authentication-provider)에서 넘어온 authentication (인증 객체)를 기반으로 토큰 생성
+   * @param authentication
+   * @return
+   */
   public TokenDTO generateToken(Authentication authentication) {
 	  log.info("[jwt token provider] generate token: " + authentication.getPrincipal());
     String authorities = authentication.getAuthorities().stream()
@@ -93,6 +111,11 @@ public class JwtTokenProvider implements InitializingBean {
             .build();
   }
 
+  /**
+   * 넘어온 access token 를 기반으로 인증 객체 생성
+   * @param accessToken
+   * @return
+   */
   public Authentication getAuthentication(String accessToken) {
 
     Claims claims = parseClaims(accessToken);
@@ -109,6 +132,11 @@ public class JwtTokenProvider implements InitializingBean {
     return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
   }
 
+  /**
+   * access token 이 유효한지 확인
+   * @param token
+   * @return
+   */
   public boolean validateToken(String token) {
     try {
 
@@ -133,6 +161,11 @@ public class JwtTokenProvider implements InitializingBean {
     }
   }
 
+  /**
+   * refresh 토큰이 유효한지 확인
+   * @param token
+   * @return
+   */
   public boolean validRefreshToken(String token) {
     if (token == null) {
       log.error("[JwtTokenProvider] Token값이 존재하지 않습니다.");
@@ -154,6 +187,11 @@ public class JwtTokenProvider implements InitializingBean {
     }
   }
 
+  /**
+   * 토큰에 들어가는 claim 생성
+   * @param accessToken
+   * @return
+   */
   private Claims parseClaims(String accessToken) {
     try {
       return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
