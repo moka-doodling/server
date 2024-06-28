@@ -2,34 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--
+    파일명 : NoticeMapper.xml
+    설  명 : 공지사항 관리
+    == 개정이력 ========================================
+     수정일        수정자     수정내용
+    ==========   =======   ================================
+    2024.06.19   김지현      최초 생성
+-->
 <mapper namespace="com.doodling.admin.mapper.NoticeMapper">
+    <!-- 공지사항 삽입 -->
     <insert id="insertNotice">
         <![CDATA[
-            insert into notice (notice_id, title, content)
-            values (seq_notice.nextval, #{title}, #{content})
+            INSERT INTO notice (notice_id, title, content)
+            VALUES (seq_notice.nextval, #{title}, #{content})
         ]]>
 	</insert>
 
+    <!-- noticeId로 공지사항 삭제 처리 -->
     <update id="deleteNotice" parameterType="java.lang.Integer">
         <![CDATA[
-            update notice
-            set deletedate = sysdate
-            where notice_id = ${noticeId}
+            UPDATE notice
+            SET deletedate = SYSDATE
+            WHERE notice_id = ${noticeId}
         ]]>
 	</update>
 
-  
+    <!-- noticeId로 공지사항 상세 조회-->
     <select id="getNotice" parameterType="java.lang.Integer" resultType="Notice">
         <![CDATA[
-        SELECT
-            title,
-            content,
-            regdate
-        FROM notice
-        WHERE deletedate IS NULL
-          AND notice_id = ${noticeId}
+            SELECT
+                title,
+                content,
+                regdate
+            FROM notice
+            WHERE deletedate IS NULL
+              AND notice_id = ${noticeId}
         ]]>
     </select>
+
+    <!-- 공지사항 전체 리스트 조회 -->
     <select id="getNoticeList" resultType="Notice">
         <![CDATA[
             SELECT
