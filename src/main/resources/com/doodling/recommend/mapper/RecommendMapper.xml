@@ -2,19 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--
+    파일명 : RecommendMapper.xml
+    설  명 : 추천 관련 처리
+    == 개정이력 ========================================
+     수정일        수정자     수정내용
+    ==========   =======   ================================
+    2024.06.19   김지현      최초 생성
+-->
 <mapper namespace="com.doodling.recommend.mapper.RecommendMapper">
 
+    <!-- 추천 등록 -->
     <insert id="insertRecommend" parameterType="Recommend">
         INSERT INTO recommend (recommend_id, member_id, submission_id)
         VALUES (seq_recommend.nextval, #{memberId}, #{submissionId})
     </insert>
 
+    <!-- memberId로 해당 제출물을 추천했는지 확인 -->
     <select id="countRecommendByMemberId" parameterType="Recommend">
          SELECT count(*) from recommend
          WHERE member_id=#{memberId}
            AND submission_id=#{submissionId}
     </select>
 
+    <!-- 추천 취소 -->
     <delete id="cancelRecommend" parameterType="Recommend">
         delete from RECOMMEND
         where MEMBER_ID=#{memberId}
